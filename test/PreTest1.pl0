@@ -1,7 +1,5 @@
-const size=100;
-type vector=array[1..100]of integer;
-var a:vector;
-    i,i,sum:integer;	/* error */	
+var i:integer
 
-i:=1	/* error */
-.
+begin
+  i:=1
+end.
