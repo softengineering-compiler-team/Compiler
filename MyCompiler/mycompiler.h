@@ -93,6 +93,7 @@ typedef struct
     enum fct f; // function code
     long l;     // level
     double a;     // displacement address
+    //long a;
 } instruction;
 /*  lit 0, a : load constant a
     opr 0, a : execute operation a

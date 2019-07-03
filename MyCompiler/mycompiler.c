@@ -419,7 +419,7 @@ void gen(enum fct x, long y, long z)
 	cx = cx + 1;
 }
 
-void test(unsigned long s1, unsigned long s2, long n)
+void test(long long s1, long long s2, long n)
 {
 	if (!(sym & s1))
 	{
@@ -446,6 +446,7 @@ void enter(enum object k)
 			num = 0;
 		}
 		table[tx].val = num;
+		table[tx].type1 = sym;
 		break;
 	case variable:
 		table[tx].level = lev;
@@ -483,7 +484,7 @@ void constdeclaration()
 				error(1);
 			}
 			getsym();
-			if (sym == number)
+			if (sym == intersym || sym == realsym)
 			{
 				enter(constant);
 				getsym();
@@ -503,7 +504,7 @@ void constdeclaration()
 		error(4);
 	}
 }
-
+/*
 void vardeclaration()
 {
 	if (sym == ident)
@@ -516,6 +517,117 @@ void vardeclaration()
 		error(4);
 	}
 }
+*/
+void vardeclaration()
+{
+	long i;
+	int identnum = 0;		 //同类型的变量个数
+	char sameid[10][al + 1]; //存放同类型的变量的名字
+	long size;
+	int j;
+	int k = 0;
+	int t;
+	if (sym == ident)
+	{
+		identnum++;
+		strcpy(sameid[k], id);
+		getsym();
+		while (sym == comma)
+		{
+			getsym();
+			if (sym == ident)
+			{
+				for (j = 0; j < identnum; j++)
+				{
+					if (strcmp(sameid[j], id) == 0)
+					{
+						error(48);
+						break;
+					}
+				}
+				identnum++;
+				k++;
+				strcpy(sameid[k], id);
+				getsym();
+			}
+		}
+		if (sym == nul)
+		{ //说明遇到：后面应该是指示变量的类型
+			getsym();
+			if (sym == intersym || sym == realsym || sym == Boolsym)
+			{
+				for (j = 0, k = 0; j < identnum; j++)
+				{ //之前的变量全部是相同的类型
+					strcpy(id, sameid[k]);
+					/*if((i=position(id))!=0){   //检查变量是否重复声明
+					  error(48);
+
+					}*/
+					enter(variable);
+					//tx1++;
+					table[tx].type1 = sym;
+
+					k++;
+				}
+			}
+			else if (sym == ident)
+			{
+				i = position(id); //在符号表中找到Id的位置 返给下表付给i
+				if (i == 0)
+				{
+					error(11);
+				}
+				sym = table[i].type1;
+				if (sym == intersym || sym == realsym || sym == Boolsym)
+				{
+					for (j = 0, k = 0; j < identnum; j++)
+					{ //之前的变量全部是相同的类型
+						strcpy(id, sameid[k]);
+						enter(variable);
+						//tx1++;
+						k++;
+						table[tx].type1 = sym;
+					}
+				}
+				else if (sym == arraysym)
+				{
+					for (j = 0; j < identnum; j++)
+					{ //之前的变量全部是相同的类型
+						strcpy(id, sameid[j]);
+						enter(variable);
+						table[tx].type1 = arraysym;
+						table[tx].drt = table[i].drt;
+						table[tx].size = table[i].size;
+						size = table[tx].size;
+						for (t = 1; t <= table[tx].drt; t++)
+						{
+							table[tx].low[t] = table[i].low[t];
+							table[tx].high[t] = table[i].high[t];
+						}
+						sym = table[i].type2;
+						table[tx].type2 = sym;
+						dx = dx + 2 * table[i].drt + 1; //存放上下界的空间
+						dx += size;
+					}
+				}
+			}
+			else
+			{
+				error(36);
+			}
+			getsym();
+		}
+		else
+		{
+			error(55);
+		}
+	}
+	else
+	{
+		error(4);
+	}
+}
+
 
 void listcode(long cx0)
 { // list code generated for this block
@@ -527,8 +639,8 @@ void listcode(long cx0)
 	}
 }
 
-void expression(unsigned long);
-void factor(unsigned long fsys)
+void expression(long long);
+void factor(long long fsys)
 {
 	long i;
 
@@ -586,9 +698,9 @@ void factor(unsigned long fsys)
 	}
 }
 
-void term(unsigned long fsys)
+void term(long long fsys)
 {
-	unsigned long mulop;
+	long long mulop;
 
 	factor(fsys | times | slash);
 	while (sym == times || sym == slash)
@@ -607,9 +719,9 @@ void term(unsigned long fsys)
 	}
 }
 
-void expression(unsigned long fsys)
+void expression(long long fsys)
 {
-	unsigned long addop;
+	long long addop;
 
 	if (sym == plus || sym == minus)
 	{
@@ -641,9 +753,9 @@ void expression(unsigned long fsys)
 	}
 }
 
-void condition(unsigned long fsys)
+void condition(long long fsys)
 {
-	unsigned long relop;
+	long long relop;
 
 	if (sym == oddsym)
 	{
@@ -688,7 +800,7 @@ void condition(unsigned long fsys)
 	}
 }
 
-void statement(unsigned long fsys)
+void statement(long long fsys)
 {
 	long i, cx1, cx2;
 
@@ -808,7 +920,7 @@ void statement(unsigned long fsys)
 	test(fsys, 0, 19);
 }
 
-void block(unsigned long fsys)
+void block(long long fsys)
 {
 	long tx0; // initial table index
 	long cx0; // initial code index
