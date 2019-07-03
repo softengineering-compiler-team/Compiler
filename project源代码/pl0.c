@@ -622,4 +622,5 @@ main(){
 	printf("errors in PL/0 program\n");
     }
     fclose(infile);
+    system("pause");
 }

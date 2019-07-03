@@ -43,7 +43,7 @@ void getch()
 	cc = cc + 1;
 	ch = line[cc];
 }
-
+/*
 void getsym()
 {
 	long i, j, k;
@@ -166,6 +166,245 @@ void getsym()
 		getch();
 	}
 }
+*/
+void getsym()
+{
+	long i, j, k;
+	int flag = 0;
+	double t = 1.0;			//标记小数点后的位数
+	double numt = 0, z = 0; //小数部分的值
+	while (ch == ' ' || ch == '\t')
+	{
+		getch();
+	}
+	if (isalpha(ch))
+	{ // identified or reserved  开始进行词法分析
+		k = 0;
+		do
+		{
+			if (k < al)
+			{
+				a[k] = ch;
+				k = k + 1;
+			}
+			getch();
+		} while (isalpha(ch) || isdigit(ch));
+		if (k >= kk)
+		{
+			kk = k;
+		}
+		else
+		{
+			do
+			{
+				kk = kk - 1;
+				a[kk] = ' ';
+			} while (k < kk);
+		}
+		strcpy(id, a);
+		i = 0;
+		j = norw - 1; //把符号串（如var）放入id中
+		do
+		{
+			k = (i + j) / 2;
+			if (strcmp(id, word[k]) <= 0)
+			{
+				j = k - 1;
+			}
+			if (strcmp(id, word[k]) >= 0)
+			{
+				i = k + 1;
+			}
+		} while (i <= j); //此循环用于在保留字符表中找到对应的保留字
+		if (i - 1 > j)
+		{
+			sym = wsym[k]; //  sym返回词法单元的类型 如果i-1》j是保留字
+		}
+		else
+		{
+			sym = ident; //否则是定义的标识符
+		}
+	}
+	else if (isdigit(ch))
+	{ // number
+		k = 0;
+		num = 0;
+		do
+		{
+			num = num * 10 + (ch - '0');
+			k = k + 1;
+			getch();
+		} while (isdigit(ch));
+		if (ch == '.')
+		{ //遇到小数点说明是实型数据
+			getch();
+			if (isdigit(ch))
+			{
+				while (isdigit(ch))
+				{
+					t /= 10;
+					num = num + (ch - '0') * t;
+					k++;
+					getch();
+				}
+				sym = realsym;
+			}
+			else if (ch == '.')
+			{ //又遇到一个点说明是数组的定义
+				sym = intersym;
+				cc = cc - 2;
+			}
+			else
+			{
+				error(57); // new error id 57
+			}
+		}
+		else
+		{
+			sym = intersym;
+		}
+		if (k > nmax)
+		{
+			error(31);
+		}
+	}
+	else if (ch == ':')
+	{
+		getch();
+		if (ch == '=')
+		{
+			sym = becomes;
+			getch();
+		}
+		else
+		{
+			sym = nul;
+		}
+	}
+	else if (ch == '/')
+	{ //新增 /* .. */
+		getch();
+		if (ch == '*')
+		{
+			flag++;
+			getch();
+			while (flag > 0)
+			{
+				while (ch != '*')
+				{
+					getch();
+				}
+				getch();
+				if (ch == '/')
+					flag--;
+			}
+			getch();
+			getsym();
+		}
+		else
+		{
+			sym = ssym[(unsigned char)'/'];
+		}
+	}
+	else if (ch == '*')
+	{ // /* .. */ .. */
+		getch();
+		if (ch == '/')
+		{
+			getch();
+			if (ch == '*')
+			{
+				flag = 0;
+				sym = ssym[(unsigned char)'*'];
+				flag++;
+				getch();
+				while (flag > 0)
+				{
+					while (ch != '*')
+					{
+						getch();
+					}
+					getch();
+					if (ch == '/')
+						flag--;
+				}
+				getch();
+			}
+			else
+			{
+				printf("a superflous note symbol \n");
+				sym = nul;
+			}
+		}
+		else
+		{
+			sym = ssym[(unsigned char)'*'];
+		}
+	}
+	else if (ch == '<')
+	{
+		getch();
+		if (ch == '=')
+		{
+			sym = leq;
+			getch();
+		}
+		else if (ch == '>')
+		{
+			sym = neq;
+			getch();
+		}
+		else
+		{
+			sym = lss;
+		}
+	}
+	else if (ch == '>')
+	{
+		getch();
+		if (ch == '=')
+		{
+			sym = geq;
+			getch();
+		}
+		else
+		{
+			sym = gtr;
+		}
+	}
+	else if (ch == '=')
+	{
+		getch();
+		if (ch == '=')
+		{
+			getch();
+		}
+		sym = eql;
+	}
+	else if (ch == '.')
+	{
+		getch();
+		if (ch == '.')
+		{
+			sym = dotdot;
+			getch();
+		}
+		else
+		{
+			sym = period;
+		}
+	}
+	else
+	{
+		sym = ssym[(unsigned char)ch];
+		getch();
+	}
+}
+
+
+//
+
+
 
 void gen(enum fct x, long y, long z)
 {
@@ -713,7 +952,7 @@ void interpret()
 			s[t] = i.a;
 			break;
 		case opr:
-			switch (i.a)
+			switch ((long)i.a)
 			{		// operator
 			case 0: // return
 				t = b - 1;
@@ -740,7 +979,7 @@ void interpret()
 				s[t] = s[t] / s[t + 1];
 				break;
 			case 6:
-				s[t] = s[t] % 2;
+				s[t] = (long)s[t] % 2;
 				break;
 			case 8:
 				t = t - 1;
@@ -769,10 +1008,10 @@ void interpret()
 			break;
 		case lod:
 			t = t + 1;
-			s[t] = s[base(b, i.l) + i.a];
+			s[t] = s[base(b, i.l) + (long) i.a];
 			break;
 		case sto:
-			s[base(b, i.l) + i.a] = s[t];
+			s[base(b, i.l) + (long) i.a] = s[t];
 			printf("%10d\n", s[t]);
 			t = t - 1;
 			break;
@@ -807,49 +1046,92 @@ int main()
 	{
 		ssym[i] = nul;
 	}
-	strcpy(word[0], "begin     ");
-	strcpy(word[1], "call      ");
-	strcpy(word[2], "const     ");
-	strcpy(word[3], "do        ");
-	strcpy(word[4], "end       ");
-	strcpy(word[5], "if        ");
-	strcpy(word[6], "odd       ");
-	strcpy(word[7], "procedure ");
-	strcpy(word[8], "then      ");
-	strcpy(word[9], "var       ");
-	strcpy(word[10], "while     ");
-	wsym[0] = beginsym;
-	wsym[1] = callsym;
-	wsym[2] = constsym;
-	wsym[3] = dosym;
-	wsym[4] = endsym;
-	wsym[5] = ifsym;
-	wsym[6] = oddsym;
-	wsym[7] = procsym;
-	wsym[8] = thensym;
-	wsym[9] = varsym;
-	wsym[10] = whilesym;
-	ssym['+'] = plus;
-	ssym['-'] = minus;
-	ssym['*'] = times;
-	ssym['/'] = slash;
-	ssym['('] = lparen;
-	ssym[')'] = rparen;
-	ssym['='] = eql;
-	ssym[','] = comma;
-	ssym['.'] = period;
-	ssym[';'] = semicolon;
-	strcpy(mnemonic[lit], "lit");
-	strcpy(mnemonic[opr], "opr");
-	strcpy(mnemonic[lod], "lod");
-	strcpy(mnemonic[sto], "sto");
-	strcpy(mnemonic[cal], "cal");
-	strcpy(mnemonic[Int], "int");
-	strcpy(mnemonic[jmp], "jmp");
-	strcpy(mnemonic[jpc], "jpc");
-	declbegsys = constsym | varsym | procsym;
-	statbegsys = beginsym | callsym | ifsym | whilesym;
-	facbegsys = ident | number | lparen;
+	for(i=0;i<norw;i++)	wsym[i]=nul;
+	strcpy(word[0],  "Boolean   ");
+	strcpy(word[1],  "and       ");
+	strcpy(word[2],  "array     ");
+    strcpy(word[3],  "begin     ");
+    strcpy(word[4],  "call      ");
+    strcpy(word[5],  "const     ");
+	strcpy(word[6],  "div       ");
+    strcpy(word[7],  "do        ");
+	strcpy(word[8],  "else      ");
+    strcpy(word[9],  "end       ");
+	strcpy(word[10], "exit      ");
+	strcpy(word[11], "false     ");
+    strcpy(word[12], "function  ");
+    strcpy(word[13], "if        ");
+	strcpy(word[14], "integer   ");
+	strcpy(word[15], "mod       ");
+	strcpy(word[16], "not       ");
+    strcpy(word[17], "odd       ");
+    strcpy(word[18], "of        ");
+	strcpy(word[19], "or        ");
+    strcpy(word[20], "procedure ");
+	strcpy(word[21], "read      ");
+	strcpy(word[22], "real      ");
+    strcpy(word[23], "then      ");
+	strcpy(word[24], "true      ");
+	strcpy(word[25], "type      ");
+    strcpy(word[26], "var       ");
+    strcpy(word[27], "while     ");
+	strcpy(word[28], "write     ");
+	strcpy(mnemonic[lit],"lit");
+    strcpy(mnemonic[opr],"opr");
+    strcpy(mnemonic[lod],"lod");
+    strcpy(mnemonic[sto],"sto");
+    strcpy(mnemonic[cal],"cal");
+    strcpy(mnemonic[Int],"int");
+    strcpy(mnemonic[jmp],"jmp");
+    strcpy(mnemonic[jpc],"jpc");
+	strcpy(mnemonic[say],"say");   //数组的存指令
+	strcpy(mnemonic[lay],"lay");    //数组的取指令
+	strcpy(mnemonic[jpq],"jpq");
+	wsym[0]=Boolsym;
+	wsym[1]=and;
+	wsym[2]=arraysym;
+	wsym[3]=beginsym;
+    wsym[4]=callsym;
+    wsym[5]=constsym;
+	wsym[6]=div;
+    wsym[7]=dosym;
+	wsym[8]=elsesym;
+    wsym[9]=endsym;
+	wsym[10]=exitsym;
+	wsym[11]=falsesym;
+	wsym[12]=funcsym;
+    wsym[13]=ifsym;
+	wsym[14]=intersym;
+	wsym[15]=mod;
+	wsym[16]=not;
+    wsym[17]=oddsym;
+	wsym[18]=ofsym;
+	wsym[19]=or;
+    wsym[20]=procsym;
+	wsym[21]=readsym;
+	wsym[22]=realsym;
+    wsym[23]=thensym;
+	wsym[24]=truesym;
+	wsym[25]=typesym;
+    wsym[26]=varsym;
+    wsym[27]=whilesym;
+	wsym[28]=writesym;
+    ssym['+']=plus;
+    ssym['-']=minus;
+    ssym['*']=times;
+    ssym['/']=slash;
+    ssym['(']=lparen;
+    ssym[')']=rparen;
+    //ssym['=']=eql;
+    ssym[',']=comma;
+    ssym['.']=period;
+    ssym[';']=semicolon;
+	ssym['[']=lmparen;
+	ssym[']']=rmparen;
+
+	declbegsys = constsym | typesym | varsym | procsym | funcsym;
+	statbegsys = beginsym | callsym | ifsym | whilesym | exitsym | writesym | readsym;
+	facbegsys = ident | intersym | realsym | lparen | not | truesym | falsesym;
 
 	printf("please input source program file name: ");
 	scanf("%s", infilename);
@@ -883,4 +1165,5 @@ int main()
 		printf("errors in PL/0 program\n");
 	}
 	fclose(infile);
+	system("pause");
 }

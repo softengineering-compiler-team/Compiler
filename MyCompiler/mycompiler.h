@@ -53,7 +53,7 @@
 #define exitsym 0x10000000000   // exit
 #define or 0x20000000000        // or
 #define and 0x40000000000       // and
-#define not0x80000000000        // not
+#define not 0x80000000000        // not
 #define div 0x100000000000      // div(int and real)
 #define mod 0x200000000000      // mod
 #define truesym 0x400000000000  // true
