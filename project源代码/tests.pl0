@@ -43,4 +43,4 @@ begin
     x:=m; y:=n; call multiply;
     x:=25; y:=3; call divide;
     x:=34; y:=36; call gcd;
-end
+end.

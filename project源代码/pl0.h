@@ -8,6 +8,8 @@
 #define levmax     3              // maximum depth of block nesting
 #define cxmax      2000           // size of code array
 
+#define now        10             //数组的最大维数
+#define pnum 10
 #define nul	   0x1
 #define ident      0x2
 #define number     0x4
@@ -39,12 +41,36 @@
 #define varsym     0x10000000
 #define procsym    0x20000000
 
+#define typesym    0x40000000
+#define arraysym   0x80000000
+#define ofsym      0x100000000
+#define intersym   0x200000000
+#define realsym    0x400000000
+#define Boolsym    0x800000000
+#define funcsym    0x1000000000
+#define elsesym    0x2000000000
+#define writesym   0x4000000000
+#define readsym    0x8000000000
+#define exitsym    0x10000000000
+#define or         0x20000000000
+#define and        0x40000000000
+#define not        0x80000000000
+#define div        0x100000000000
+#define mod        0x200000000000
+#define truesym    0x400000000000
+#define falsesym   0x800000000000
+#define lmparen    0x1000000000000
+#define rmparen    0x2000000000000
+#define typeerror  0x4000000000000
+#define voiderror  0x8000000000000
+#define dotdot     0x10000000000000
+
 enum object {
-    constant, variable, proc
+    constant, variable, proc ,type ,func
 };
 
 enum fct {
-    lit, opr, lod, sto, cal, Int, jmp, jpc         // functions
+    lit, opr, lod, sto, cal, Int, jmp, jpc ,say, lay, jpq        // functions
 };
 
 typedef struct{
@@ -86,6 +112,15 @@ struct{
     long val;
     long level;
     long addr;
+	long funcaddr;     //给函数使用，记录函数在符号表中的地址偏移量
+    __int64 paral[pnum]; //存放函数参数类型，用于类型检查
+	__int64 type1;     //在符号表中增加类型项
+    long size;         //若是数组类型还要记录大小
+	long drt;            //数组维数
+	long low[now];          //数组每一维下界
+	long high[now];         //数组每一维上界
+	__int64 type2;     //数组元素的类型
+	int n;             //过程或函数的参数个数
 }table[txmax+1];
 
 char infilename[80];
