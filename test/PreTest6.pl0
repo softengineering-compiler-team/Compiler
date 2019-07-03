@@ -26,7 +26,7 @@ procedure divide(x:integer; y:integer);
 		        r:=r-w;
 			q:=q+1;
 		    end
-            end;
+                      end;
 	write(q, r)
     end;
 
@@ -44,4 +44,4 @@ begin
     x:=m; y:=n; write(multiply(x,y));	/* 595 */
     x:=25; y:=3; call divide(x,y);	/* 8,1 */
     x:=34; y:=36; z:=gcd(x,y); write(z); /* 2 */
-end.
+/*end

@@ -1,4 +1,4 @@
-type arr = array[1 ..10] of integer;
+type arr = array[1..10] of integer;
 var A: arr;
 i : integer;
 
