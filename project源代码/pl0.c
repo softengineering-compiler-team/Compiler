@@ -3,31 +3,31 @@
 #include <string.h>
 #include "pl0.h"
 
-void error(long n)
+void error(long n) //error handling
 {
 	long i;
 
 	printf(" ****");
-	for (i = 1; i <= cc - 1; i++)
+	for (i = 1; i <= cc - 1; i++) //cc points to the current char in line 
 	{
 		printf(" ");
 	}
-	printf("^%2d\n", n);
-	err++;
+	printf("^%2d\n", n);  //print the error no
+	err++;  //err count plus
 }
 
-void getch()
+void getch()  //get the next char to make a token
 {
-	if (cc == ll)
+	if (cc == ll) //ll equals to end of curr line
 	{
-		if (feof(infile))
+		if (feof(infile)) // file read imcompletely
 		{
 			printf("************************************\n");
 			printf("      program incomplete\n");
 			printf("************************************\n");
 			exit(1);
 		}
-		ll = 0;
+		ll = 0;  // restore two var 
 		cc = 0;
 		printf("%5d ", cx);
 		while ((!feof(infile)) && ((ch = getc(infile)) != '\n'))
@@ -40,15 +40,15 @@ void getch()
 		ll = ll + 1;
 		line[ll] = ' ';
 	}
-	cc = cc + 1;
-	ch = line[cc];
+	cc = cc + 1; // pointer ++
+	ch = line[cc]; //char stored in ch
 }
 
-void getsym()
+void getsym() //analysis of token
 {
 	long i, j, k;
 
-	while (ch == ' ' || ch == '\t')
+	while (ch == ' ' || ch == '\t') //skip space
 	{
 		getch();
 	}
@@ -90,14 +90,14 @@ void getsym()
 			{
 				i = k + 1;
 			}
-		} while (i <= j);
+		} while (i <= j); //此循环用于在保留字符表中找到对应的保留字
 		if (i - 1 > j)
 		{
-			sym = wsym[k];
+			sym = wsym[k];//  sym返回词法单元的类型 如果i-1》j是保留字
 		}
 		else
 		{
-			sym = ident;
+			sym = ident; //否则是定义的标识符
 		}
 	}
 	else if (isdigit(ch))
@@ -167,36 +167,38 @@ void getsym()
 	}
 }
 
-void gen(enum fct x, long y, long z)
+void gen(enum fct x, long y, long z) //generate the median code
 {
-	if (cx > cxmax)
+	if (cx > cxmax) //cx points to the address code distributed
 	{
 		printf("program too long\n");
 		exit(1);
 	}
-	code[cx].f = x;
-	code[cx].l = y;
-	code[cx].a = z;
+	code[cx].f = x; //function symbol stored in code table array
+	code[cx].l = y; //level
+	code[cx].a = z; //address
 	cx = cx + 1;
 }
 
 void test(unsigned long s1, unsigned long s2, long n)
+// test the validation of token and error handle
 {
+	//test whether curr token(sym) is in the s1 set
 	if (!(sym & s1))
 	{
 		error(n);
 		s1 = s1 | s2;
 		while (!(sym & s1))
 		{
-			getsym();
+			getsym(); //until get valid token
 		}
 	}
 }
 
 void enter(enum object k)
-{ // enter object into table
+{ // enter proc or coonst or variable into symbol table
 	tx = tx + 1;
-	strcpy(table[tx].name, id);
+	strcpy(table[tx].name, id); //golbal var id storing var name
 	table[tx].kind = k;
 	switch (k)
 	{
@@ -236,9 +238,9 @@ void constdeclaration()
 {
 	if (sym == ident)
 	{
-		getsym();
+		getsym(); //取得const常量的下一个词的类型
 		if (sym == eql || sym == becomes)
-		{
+		{ // 常量申明中应该为=而不是:=
 			if (sym == becomes)
 			{
 				error(1);
@@ -246,26 +248,26 @@ void constdeclaration()
 			getsym();
 			if (sym == number)
 			{
-				enter(constant);
-				getsym();
+				enter(constant); // register token into table
+				getsym(); //??
 			}
 			else
 			{
-				error(2);
+				error(2); //=后应为数
 			}
 		}
 		else
 		{
-			error(3);
+			error(3); //标识符后应为=
 		}
 	}
 	else
 	{
-		error(4);
+		error(4); //const后应为标识符
 	}
 }
 
-void vardeclaration()
+void vardeclaration() //need to change for different type
 {
 	if (sym == ident)
 	{
@@ -278,7 +280,7 @@ void vardeclaration()
 	}
 }
 
-void listcode(long cx0)
+void listcode(long cx0) //列出当前层的PCODE代码
 { // list code generated for this block
 	long i;
 
@@ -289,11 +291,13 @@ void listcode(long cx0)
 }
 
 void expression(unsigned long);
-void factor(unsigned long fsys)
+
+void factor(unsigned long fsys) //因子处理过程
 {
 	long i;
 
 	test(facbegsys, fsys, 24);
+	//test if curr token is in the factor symbol set
 	while (sym & facbegsys)
 	{
 		if (sym == ident)
@@ -347,7 +351,8 @@ void factor(unsigned long fsys)
 	}
 }
 
-void term(unsigned long fsys)
+void term(unsigned long fsys)//项处理过程
+// which is composed of factor such as factor*factor
 {
 	unsigned long mulop;
 
@@ -403,6 +408,7 @@ void expression(unsigned long fsys)
 }
 
 void condition(unsigned long fsys)
+//条件处理过程
 {
 	unsigned long relop;
 
@@ -450,6 +456,7 @@ void condition(unsigned long fsys)
 }
 
 void statement(unsigned long fsys)
+//语句分析过程 调用上述表达式分析等
 {
 	long i, cx1, cx2;
 
@@ -570,6 +577,7 @@ void statement(unsigned long fsys)
 }
 
 void block(unsigned long fsys)
+//分程序处理过程
 {
 	long tx0; // initial table index
 	long cx0; // initial code index
@@ -678,6 +686,7 @@ void block(unsigned long fsys)
 }
 
 long base(long b, long l)
+//用于沿着静态链，向前查找相差指定层数的局部数据段基址
 {
 	long b1;
 
