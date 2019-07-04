@@ -773,10 +773,14 @@ void expression(long long fsys) // simple expression
 
 void condition(long long fsys)
 {
+<<<<<<< HEAD
+	long long relop; //临时记录token
+=======
 	long long relop;
 	long long lasttype;
+>>>>>>> 1f59ca542e1d2003975bf1e82a4d3c728be288b6
 
-	if (sym == oddsym)
+	if (sym == oddsym) //
 	{
 		getsym();
 		expression(fsys);
@@ -949,11 +953,29 @@ void statement(long long fsys) // 程序控制流程
 		{
 			error(16);
 		}
-		cx1 = cx;
+		cx1 = cx; //cx1指向当前代码位置
 		gen(jpc, 0, 0);
-		statement(fsys);
-		code[cx1].a = cx;
+		statement(fsys|semicolon|endsym|elsesym);
+		//code[cx1].a = cx;
+		if(sym==semicolon){
+		getsym();
+		}
+		if(sym==elsesym){
+			getsym();
+			cx2=cx;gen(jmp,0,0);
+			code[cx1].a=cx;	
+			statement(fsys|semicolon|endsym);
+			code[cx2].a=cx;
+		}
+		else{
+			code[cx1].a=cx;
+			statement(fsys|semicolon|endsym);
+		}
 	}
+	else if(sym==elsesym){
+		getsym();
+		statement(fsys|semicolon|endsym);
+    }
 	else if (sym == beginsym)
 	{
 		getsym();
