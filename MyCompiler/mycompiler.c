@@ -406,7 +406,7 @@ void getsym()
 
 
 
-void gen(enum fct x, long y, long z)
+void gen(enum fct x, long y, double z)
 {
 	if (cx > cxmax)
 	{
@@ -635,11 +635,11 @@ void listcode(long cx0)
 
 	for (i = cx0; i <= cx - 1; i++)
 	{
-		printf("%10d%5s%3d%5d\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
+		printf("%10d%5s%3d%10.5lf\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
 	}
 }
 
-void expression(long long);
+//void expression(long long);
 void factor(long long fsys)
 {
 	long i, j, k;
@@ -874,7 +874,7 @@ void expression(long long fsys) // simple expression
 				lastsym = realsym;
 			}else{
 				lastsym = typeerror;
-				error(50); // 非数字相减 错误
+				error(5007); // 非数字相减 错误
 			}
 			gen(opr, 0, 3);//中间代码
 		}
@@ -883,7 +883,7 @@ void expression(long long fsys) // simple expression
 				lastsym = Boolsym;
 			}else{
 				lastsym = typeerror;
-				error(50);
+				error(5008);
 			}
 			gen(opr, 0, 21);
 			cx2 = cx;
@@ -898,46 +898,62 @@ void expression(long long fsys) // simple expression
 void condition(long long fsys)
 {
 	long long relop;
+	long long lasttype;
 
 	if (sym == oddsym)
 	{
 		getsym();
 		expression(fsys);
+		if(lastsym = intersym){
+			lastsym = Boolsym;
+		}else{
+			lastsym = typeerror;
+			error(5009);
+		}
 		gen(opr, 0, 6);
 	}
-	else
-	{
-		expression(fsys | eql | neq | lss | gtr | leq | geq);
-		if (!(sym & (eql | neq | lss | gtr | leq | geq)))
+	else{
+		expression(fsys | eql | neq | lss | gtr | leq | geq | comma | rparen | rmparen);
+	}
+	if (sym & (eql | neq | lss | gtr | leq | geq)){
+		relop = sym;
+		getsym();
+		lasttype = lastsym;
+		expression(fsys);
+		if(lasttype == intersym && lastsym == intersym){
+			lastsym = Boolsym;
+		}else if(lasttype == intersym && lastsym == realsym){
+			lastsym = Boolsym;
+		}else if(lasttype == realsym && lastsym == realsym){
+			lastsym = Boolsym;
+		}else if(lasttype == realsym && lastsym == intersym){
+			lastsym = Boolsym;
+		}else if(lasttype == Boolsym && lastsym == Boolsym){
+			lastsym = Boolsym;
+		}else{
+			lastsym = typeerror;
+			error(5010);
+		}	
+		switch (relop)
 		{
-			error(20);
-		}
-		else
-		{
-			relop = sym;
-			getsym();
-			expression(fsys);
-			switch (relop)
-			{
-			case eql:
-				gen(opr, 0, 8);
-				break;
-			case neq:
-				gen(opr, 0, 9);
-				break;
-			case lss:
-				gen(opr, 0, 10);
-				break;
-			case geq:
-				gen(opr, 0, 11);
-				break;
-			case gtr:
-				gen(opr, 0, 12);
-				break;
-			case leq:
-				gen(opr, 0, 13);
-				break;
-			}
+		case eql:
+			gen(opr, 0, 8);
+			break;
+		case neq:
+			gen(opr, 0, 9);
+			break;
+		case lss:
+			gen(opr, 0, 10);
+			break;
+		case geq:
+			gen(opr, 0, 11);
+			break;
+		case gtr:
+			gen(opr, 0, 12);
+			break;
+		case leq:
+			gen(opr, 0, 13);
+			break;
 		}
 	}
 }
@@ -954,6 +970,7 @@ void statement(long long fsys) // 程序控制流程
 	if (sym == ident)
 	{
 		i = position(id);
+		/*
 		if (i == 0)
 		{
 			error(11);
@@ -964,6 +981,14 @@ void statement(long long fsys) // 程序控制流程
 			i = 0;
 		}
 		getsym();
+		*/
+		if(table[i].type1 == arraysym){
+			//是数组
+		}else{
+			lasttype = table[i].type2;
+			getsym();
+		}//不是数组，类型存在type2
+
 		if (sym == becomes)
 		{
 			getsym();
@@ -972,10 +997,42 @@ void statement(long long fsys) // 程序控制流程
 		{
 			error(13);
 		}
-		expression(fsys);
+		condition(fsys);
+		// if(lasttype == intersym && lastsym == intersym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == intersym && lastsym == realsym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == realsym && lastsym == realsym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == realsym && lastsym == intersym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == Boolsym && lasttype == lastsym){
+		// 	lastsym = voiderror;
+		// }else{
+		// 	printf("lastsym=%lld\nlasttype=%lld\n",lastsym,lasttype);
+		// 	lastsym = typeerror;
+		// 	error(5011);
+		// 	}
 		if (i != 0)
 		{
-			gen(sto, lev - table[i].level, table[i].addr);
+			//gen(sto, lev - table[i].level, table[i].addr);
+			switch (table[i].kind)
+			{
+			case variable:
+				if(table[i].type1 == intersym || table[i].type1 == realsym){
+					gen(sto, lev-table[i].level, table[i].addr);
+				}else if(table[i].type1 = arraysym){
+					//arraydo(sto,i);
+				}
+				break;
+			case func:
+				gen(sto, lev-table[i].level, table[i].funcaddr);
+				break;
+			case type:
+				error(56);
+			default:
+				break;
+			}
 		}
 	}
 	else if (sym == callsym)
