@@ -1388,4 +1388,5 @@ int main()
 	}
 	fclose(infile);
 	system("pause");
+	///...
 }
