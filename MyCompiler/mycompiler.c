@@ -2,6 +2,218 @@
 #include "mycompiler.h"
 int mycnt = 0;
 
+void init()
+{
+	long i;
+	for (i = 0; i < 256; i++)
+	{
+		ssym[i] = nul;
+	}
+	for (i = 0; i < norw; i++)
+		wsym[i] = nul;
+	strcpy(word[0], "Boolean   ");
+	strcpy(word[1], "and       ");
+	strcpy(word[2], "array     ");
+	strcpy(word[3], "begin     ");
+	strcpy(word[4], "call      ");
+	strcpy(word[5], "const     ");
+	strcpy(word[6], "div       ");
+	strcpy(word[7], "do        ");
+	strcpy(word[8], "else      ");
+	strcpy(word[9], "end       ");
+	strcpy(word[10], "exit      ");
+	strcpy(word[11], "false     ");
+	strcpy(word[12], "function  ");
+	strcpy(word[13], "if        ");
+	strcpy(word[14], "integer   ");
+	strcpy(word[15], "mod       ");
+	strcpy(word[16], "not       ");
+	strcpy(word[17], "odd       ");
+	strcpy(word[18], "of        ");
+	strcpy(word[19], "or        ");
+	strcpy(word[20], "procedure ");
+	strcpy(word[21], "read      ");
+	strcpy(word[22], "real      ");
+	strcpy(word[23], "then      ");
+	strcpy(word[24], "true      ");
+	strcpy(word[25], "type      ");
+	strcpy(word[26], "var       ");
+	strcpy(word[27], "while     ");
+	strcpy(word[28], "write     ");
+	strcpy(mnemonic[lit], "lit");
+	strcpy(mnemonic[opr], "opr");
+	strcpy(mnemonic[lod], "lod");
+	strcpy(mnemonic[sto], "sto");
+	strcpy(mnemonic[cal], "cal");
+	strcpy(mnemonic[Int], "int");
+	strcpy(mnemonic[jmp], "jmp");
+	strcpy(mnemonic[jpc], "jpc");
+	strcpy(mnemonic[say], "say"); //数组的存指令
+	strcpy(mnemonic[lay], "lay"); //数组的取指令
+	strcpy(mnemonic[jpq], "jpq");
+	wsym[0] = Boolsym;
+	wsym[1] = and;
+	wsym[2] = arraysym;
+	wsym[3] = beginsym;
+	wsym[4] = callsym;
+	wsym[5] = constsym;
+	wsym[6] = div;
+	wsym[7] = dosym;
+	wsym[8] = elsesym;
+	wsym[9] = endsym;
+	wsym[10] = exitsym;
+	wsym[11] = falsesym;
+	wsym[12] = funcsym;
+	wsym[13] = ifsym;
+	wsym[14] = intersym;
+	wsym[15] = mod;
+	wsym[16] = not;
+	wsym[17] = oddsym;
+	wsym[18] = ofsym;
+	wsym[19] = or ;
+	wsym[20] = procsym;
+	wsym[21] = readsym;
+	wsym[22] = realsym;
+	wsym[23] = thensym;
+	wsym[24] = truesym;
+	wsym[25] = typesym;
+	wsym[26] = varsym;
+	wsym[27] = whilesym;
+	wsym[28] = writesym;
+	ssym['+'] = plus;
+	ssym['-'] = minus;
+	ssym['*'] = times;
+	ssym['/'] = slash;
+	ssym['('] = lparen;
+	ssym[')'] = rparen;
+	//ssym['=']=eql;
+	ssym[','] = comma;
+	ssym['.'] = period;
+	ssym[';'] = semicolon;
+	ssym['['] = lmparen;
+	ssym[']'] = rmparen;
+
+	declbegsys = constsym | typesym | varsym | procsym | funcsym;
+	statbegsys = beginsym | callsym | ifsym | whilesym | exitsym | writesym | readsym;
+	facbegsys = ident | intersym | realsym | lparen | not | truesym | falsesym;
+}
+
+void switchType(long long sym)
+{
+	switch (sym)
+	{
+	case nul:printf("nul");break;
+	case ident:printf("ident");break;
+	case number:printf("number");break;
+	case plus:printf("plus");break;
+	case minus:printf("minus");break;
+	case times:printf("times");break;
+	case slash:printf("slash");break;
+	case oddsym:printf("oddsym");break;
+	case eql:printf("eql");break;
+	case neq:printf("neq");break;
+	case lss:printf("lss");break;
+	case leq:printf("leq");break;
+	case gtr:printf("gtr");break;
+	case geq:printf("geq");break;
+	case lparen:printf("lparen");break;
+	case rparen:printf("rparen");break;
+	case comma:printf("comma");break;
+	case semicolon:printf("semicolon");break;
+	case period:printf("period");break;
+	case becomes:printf("becomes");break;
+	case beginsym:printf("beginsym");break;
+	case endsym:printf("endsym");break;
+	case ifsym:printf("ifsym");break;
+	case thensym:printf("thensym");break;
+	case whilesym:printf("whilesym");break;
+	case dosym:printf("dosym");break;
+	case callsym:printf("callsym");break;
+	case constsym:printf("constsym");break;
+	case varsym:printf("varsym");break;
+	case procsym:printf("procsym");break;
+	case typesym:printf("typesym");break;
+	case arraysym:printf("arraysym");break;
+	case ofsym:printf("ofsym");break;
+	case intersym:printf("intersym");break;
+	case realsym:printf("realsym");break;
+	case Boolsym:printf("Boolsym");break;
+	case funcsym:printf("funcsym");break;
+	case elsesym:printf("elsesym");break;
+	case writesym:printf("writesym");break;
+	case readsym:printf("readsym");break;
+	case exitsym:printf("exitsym");break;
+	case or:printf("or");break;
+	case and:printf("and");break;
+	case not:printf("not");break;
+	case div:printf("div");break;
+	case mod:printf("mod");break;
+	case truesym:printf("truesym");break;
+	case falsesym:printf("falsesym");break;
+	case lmparen:printf("lmparen");break;
+	case rmparen:printf("rmparen");break;
+	case typeerror:printf("typeerror");break;
+	case voiderror:printf("voiderror");break;
+	case dotdot:printf("dotdot");break;
+	default: break;
+	}
+	return ;
+}
+
+void Tableprint(int i)
+{
+	printf("\nNow printing table[%d]:\n",i);
+	printf("\t.name =\t\t%s\n",table[i].name);
+	printf("\t.kind =\t\t");
+	switch(table[i].kind)
+	{
+	case constant:
+		puts("constant");break;
+	case variable:
+		puts("variable");break;
+	case proc:
+		puts("procedure");break;
+	case type:
+		puts("type");break;
+	case func:
+		puts("function");break;
+	}
+	printf("\t.val =\t\t%.6lf\n",table[i].val);
+	printf("\t.level =\t%ld\n",table[i].level);
+	printf("\t.addr =\t\t%ld\n",table[i].addr);
+	printf("\t.funcaddr =\t%ld\n",table[i].funcaddr);
+	int j = 0;
+	printf("\t.paral[] =\n");
+	while(table[i].paral[j]!=NULL)
+	{
+		printf("\t\t%d =\t",j);
+		switchType(table[i].paral[j]);
+		puts("");
+		j++;
+	}
+	printf("\t.type1 =\t");switchType(table[i].type1);puts("");
+	printf("\t.size =\t\t%ld\n",table[i].size);
+	printf("\t.drt =\t\t%ld\n",table[i].drt);
+	printf("\t.low[] =\n\t\t");
+	j=0;
+	while(table[i].low[j]!=NULL)
+	{
+		printf("%ld\t",table[i].low[j]);
+		j++;
+	}
+	puts("");
+	printf("\t.high[] =\n\t\t");
+	j=0;
+	while(table[i].high[j]!=NULL)
+	{
+		printf("%ld\t",table[i].high[j]);
+		j++;
+	}
+	puts("");
+	printf("\t.type2 =\t\t");switchType(table[i].type2);puts("");
+	printf("\t.n =\t\t%d\n",table[i].n);
+}
+
 void error(long n)
 {
 	long i;
@@ -44,6 +256,8 @@ void getch()
 }
 void getsym()
 {
+	printf("debug start:\n");
+	printf("now sym=");switchType(sym);puts("");
 	long i, j, k;
 	int flag = 0;
 	double t = 1.0;			//标记小数点后的位数
@@ -264,6 +478,8 @@ void getsym()
 		sym = ssym[(unsigned char)ch];
 		getch();
 	}
+	printf("after getsym now sym=");switchType(sym);puts("");
+	printf("debug ends\n");
 }
 
 void gen(enum fct x, long y, double z)
@@ -659,7 +875,7 @@ void factor(long long fsys)
 						{//数组类型
 							away = 0;
 							getsym();
-							for(j=0; j<table[i].dir; j++)
+							for(j=0; j<table[i].drt; j++)
 							{
 								if(sym == lmparen)
 								{
@@ -1634,98 +1850,7 @@ void interpret()
 
 int main()
 {
-	long i;
-	for (i = 0; i < 256; i++)
-	{
-		ssym[i] = nul;
-	}
-	for (i = 0; i < norw; i++)
-		wsym[i] = nul;
-	strcpy(word[0], "Boolean   ");
-	strcpy(word[1], "and       ");
-	strcpy(word[2], "array     ");
-	strcpy(word[3], "begin     ");
-	strcpy(word[4], "call      ");
-	strcpy(word[5], "const     ");
-	strcpy(word[6], "div       ");
-	strcpy(word[7], "do        ");
-	strcpy(word[8], "else      ");
-	strcpy(word[9], "end       ");
-	strcpy(word[10], "exit      ");
-	strcpy(word[11], "false     ");
-	strcpy(word[12], "function  ");
-	strcpy(word[13], "if        ");
-	strcpy(word[14], "integer   ");
-	strcpy(word[15], "mod       ");
-	strcpy(word[16], "not       ");
-	strcpy(word[17], "odd       ");
-	strcpy(word[18], "of        ");
-	strcpy(word[19], "or        ");
-	strcpy(word[20], "procedure ");
-	strcpy(word[21], "read      ");
-	strcpy(word[22], "real      ");
-	strcpy(word[23], "then      ");
-	strcpy(word[24], "true      ");
-	strcpy(word[25], "type      ");
-	strcpy(word[26], "var       ");
-	strcpy(word[27], "while     ");
-	strcpy(word[28], "write     ");
-	strcpy(mnemonic[lit], "lit");
-	strcpy(mnemonic[opr], "opr");
-	strcpy(mnemonic[lod], "lod");
-	strcpy(mnemonic[sto], "sto");
-	strcpy(mnemonic[cal], "cal");
-	strcpy(mnemonic[Int], "int");
-	strcpy(mnemonic[jmp], "jmp");
-	strcpy(mnemonic[jpc], "jpc");
-	strcpy(mnemonic[say], "say"); //数组的存指令
-	strcpy(mnemonic[lay], "lay"); //数组的取指令
-	strcpy(mnemonic[jpq], "jpq");
-	wsym[0] = Boolsym;
-	wsym[1] = and;
-	wsym[2] = arraysym;
-	wsym[3] = beginsym;
-	wsym[4] = callsym;
-	wsym[5] = constsym;
-	wsym[6] = div;
-	wsym[7] = dosym;
-	wsym[8] = elsesym;
-	wsym[9] = endsym;
-	wsym[10] = exitsym;
-	wsym[11] = falsesym;
-	wsym[12] = funcsym;
-	wsym[13] = ifsym;
-	wsym[14] = intersym;
-	wsym[15] = mod;
-	wsym[16] = not;
-	wsym[17] = oddsym;
-	wsym[18] = ofsym;
-	wsym[19] = or ;
-	wsym[20] = procsym;
-	wsym[21] = readsym;
-	wsym[22] = realsym;
-	wsym[23] = thensym;
-	wsym[24] = truesym;
-	wsym[25] = typesym;
-	wsym[26] = varsym;
-	wsym[27] = whilesym;
-	wsym[28] = writesym;
-	ssym['+'] = plus;
-	ssym['-'] = minus;
-	ssym['*'] = times;
-	ssym['/'] = slash;
-	ssym['('] = lparen;
-	ssym[')'] = rparen;
-	//ssym['=']=eql;
-	ssym[','] = comma;
-	ssym['.'] = period;
-	ssym[';'] = semicolon;
-	ssym['['] = lmparen;
-	ssym[']'] = rmparen;
-
-	declbegsys = constsym | typesym | varsym | procsym | funcsym;
-	statbegsys = beginsym | callsym | ifsym | whilesym | exitsym | writesym | readsym;
-	facbegsys = ident | intersym | realsym | lparen | not | truesym | falsesym;
+	init();
 
 	printf("please input source program file name: ");
 	scanf("%s", infilename);
@@ -1746,6 +1871,14 @@ int main()
 	lev = 0;
 	tx = 0;
 	block(declbegsys | statbegsys | period);
+	printf("Now debug:\n");
+	int i;
+	for(i=0;i<=tx;i++)
+	{
+		Tableprint(i);
+	}
+	
+	printf("Debug ends\n");
 	if (sym != period)
 	{
 		error(9);

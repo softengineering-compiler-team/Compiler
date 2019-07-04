@@ -132,7 +132,7 @@ struct
 {
     char name[al + 1];
     enum object kind;
-    long val;
+    double val;
     long level;
     long addr;
     long funcaddr; // 函数在符号表中的地址偏移量
