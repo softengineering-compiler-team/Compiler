@@ -116,6 +116,72 @@ void getsym() //analysis of token
 			error(31);
 		}
 	}
+	else if (ch == '/'){
+		getch();
+		if (ch == '*'){
+			while(1){
+				getch();
+				if(ch != '*'){
+					continue;
+				}
+				else{
+					getch();
+					if(ch == '/'){
+						break;
+					}
+					else{
+						continue;
+					}
+				}
+			}
+			getch();
+			getsym();
+		}
+		else if(ch == '/'){
+			cc = ll;
+			getch();
+			getsym();
+		}
+		else{
+			sym = ssym[(unsigned char)'/'];
+		} 
+	}
+	else if (ch == '*') {
+		getch();
+		if(ch == '/'){
+			getch();
+			if(ch == '*'){
+				sym = ssym[(unsigned char)'*'];
+				while(1){
+					getch();
+					if(ch != '*'){
+						continue;
+					}
+					else{
+						getch();
+						if(ch == '/'){
+							break;
+						}
+						else{
+							continue;
+						}
+					}
+				}
+			getch();
+			}
+			else if(ch == '/'){
+				cc = ll;
+				sym = ssym[(unsigned char)'*'];
+				getch();
+			}
+			else{
+				printf("'*/'not match\n");
+			}
+		}
+		else{
+			sym = ssym[(unsigned char)'*'];
+		}
+	}
 	else if (ch == ':')
 	{
 		getch();
