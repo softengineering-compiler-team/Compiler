@@ -2,5 +2,11 @@ const m=7, n=85;
 var x,y,z,q,r : integer;
 
 begin
-    x:=m
+    x:=2;
+	write(x);
+	write(2);
+	write(2.1);
+	
+	
+	
 end.

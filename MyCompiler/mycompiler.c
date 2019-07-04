@@ -566,7 +566,14 @@ void factor(long long fsys)
 				case proc:
 					error(21);
 					break;
+
+				case func:
+				{
+					break;
 				}
+
+				}
+				
 			}
 			// getsym操作 在 break前做掉
 			//getsym();
@@ -1003,6 +1010,52 @@ void statement(long long fsys) // 程序控制流程
 		gen(jmp, 0, cx1);
 		code[cx2].a = cx;
 	}
+	else if (sym == writesym)
+	{
+		getsym();
+		if (sym == lparen)
+		{
+			do
+			{
+				getsym();
+				condition(fsys | rparen | comma);
+				if (lastsym != intersym && lastsym != realsym)
+					{
+						lastsym = typeerror;
+						error(53);
+					}
+				
+				if(lastsym == intersym)
+				{
+					gen(opr, 0, 16);
+				}	
+				else if(lastsym == realsym)
+				{
+					gen(opr, 0, 24);
+				}
+				
+				
+			} while (sym == comma);
+			if(sym !=rparen)
+			{
+				error(35);
+			}
+			else
+			{
+				getsym();
+			}
+			gen(opr, 0, 17);
+			
+			
+		}
+		else
+		{
+			error(35);
+		}
+		
+
+	}
+
 	test(fsys, 0, 19);
 }
 
