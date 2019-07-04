@@ -1,6 +1,7 @@
 // pl/0 compiler with code generation
 #include "mycompiler.h"
-
+// ...
+/* */
 int mycnt = 0;
 
 void error(long n)
@@ -43,130 +44,6 @@ void getch()
 	cc = cc + 1;
 	ch = line[cc];
 }
-/*
-void getsym()
-{
-	long i, j, k;
-
-	while (ch == ' ' || ch == '\t')
-	{
-		getch();
-	}
-	if (isalpha(ch))
-	{ // identified or reserved
-		k = 0;
-		do
-		{
-			if (k < al)
-			{
-				a[k] = ch;
-				k = k + 1;
-			}
-			getch();
-		} while (isalpha(ch) || isdigit(ch));
-		if (k >= kk)
-		{
-			kk = k;
-		}
-		else
-		{
-			do
-			{
-				kk = kk - 1;
-				a[kk] = ' ';
-			} while (k < kk);
-		}
-		strcpy(id, a);
-		i = 0;
-		j = norw - 1;
-		do
-		{
-			k = (i + j) / 2;
-			if (strcmp(id, word[k]) <= 0)
-			{
-				j = k - 1;
-			}
-			if (strcmp(id, word[k]) >= 0)
-			{
-				i = k + 1;
-			}
-		} while (i <= j);
-		if (i - 1 > j)
-		{
-			sym = wsym[k];
-		}
-		else
-		{
-			sym = ident;
-		}
-	}
-	else if (isdigit(ch))
-	{ // number
-		k = 0;
-		num = 0;
-		sym = number;
-		do
-		{
-			num = num * 10 + (ch - '0');
-			k = k + 1;
-			getch();
-		} while (isdigit(ch));
-		if (k > nmax)
-		{
-			error(31);
-		}
-	}
-	else if (ch == ':')
-	{
-		getch();
-		if (ch == '=')
-		{
-			sym = becomes;
-			getch();
-		}
-		else
-		{
-			sym = nul;
-		}
-	}
-	else if (ch == '<')
-	{
-		getch();
-		if (ch == '=')
-		{
-			sym = leq;
-			getch();
-		}
-		else if (ch == '>')
-		{
-			sym = neq;
-			getch();
-		}
-		else
-		{
-			sym = lss;
-		}
-	}
-	else if (ch == '>')
-	{
-		getch();
-		if (ch == '=')
-		{
-			sym = geq;
-			getch();
-		}
-		else
-		{
-			sym = gtr;
-		}
-	}
-	else
-	{
-		sym = ssym[(unsigned char)ch];
-		getch();
-	}
-}
-*/
 void getsym()
 {
 	long i, j, k;
@@ -281,63 +158,69 @@ void getsym()
 			sym = nul;
 		}
 	}
-	else if (ch == '/')
-	{ //新增 /* .. */
+	else if (ch == '/'){
 		getch();
-		if (ch == '*')
-		{
-			flag++;
-			getch();
-			while (flag > 0)
-			{
-				while (ch != '*')
-				{
-					getch();
-				}
+		if (ch == '*'){
+			while(1){
 				getch();
-				if (ch == '/')
-					flag--;
+				if(ch != '*'){
+					continue;
+				}
+				else{
+					getch();
+					if(ch == '/'){
+						break;
+					}
+					else{
+						continue;
+					}
+				}
 			}
 			getch();
 			getsym();
 		}
-		else
-		{
-			sym = ssym[(unsigned char)'/'];
-		}
-	}
-	else if (ch == '*')
-	{ // /* .. */ .. */
-		getch();
-		if (ch == '/')
-		{
+		else if(ch == '/'){
+			cc = ll;
 			getch();
-			if (ch == '*')
-			{
-				flag = 0;
+			getsym();
+		}
+		else{
+			sym = ssym[(unsigned char)'/'];
+		} 
+	}
+	else if (ch == '*') {
+		getch();
+		if(ch == '/'){
+			getch();
+			if(ch == '*'){
 				sym = ssym[(unsigned char)'*'];
-				flag++;
-				getch();
-				while (flag > 0)
-				{
-					while (ch != '*')
-					{
-						getch();
-					}
+				while(1){
 					getch();
-					if (ch == '/')
-						flag--;
+					if(ch != '*'){
+						continue;
+					}
+					else{
+						getch();
+						if(ch == '/'){
+							break;
+						}
+						else{
+							continue;
+						}
+					}
 				}
+			getch();
+			}
+			else if(ch == '/'){
+				cc = ll;
+				sym = ssym[(unsigned char)'*'];
 				getch();
 			}
-			else
-			{
-				printf("a superflous note symbol \n");
-				sym = nul;
+			else{
+				printf("'*/'not match\n");
 			}
 		}
-		else
-		{
+		else{
 			sym = ssym[(unsigned char)'*'];
 		}
 	}
@@ -406,7 +289,7 @@ void getsym()
 
 
 
-void gen(enum fct x, long y, long z)
+void gen(enum fct x, long y, double z)
 {
 	if (cx > cxmax)
 	{
@@ -635,11 +518,11 @@ void listcode(long cx0)
 
 	for (i = cx0; i <= cx - 1; i++)
 	{
-		printf("%10d%5s%3d%5d\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
+		printf("%10d%5s%3d%10.5lf\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
 	}
 }
 
-void expression(long long);
+//void expression(long long);
 void factor(long long fsys)
 {
 	long i, j, k;
@@ -874,7 +757,7 @@ void expression(long long fsys) // simple expression
 				lastsym = realsym;
 			}else{
 				lastsym = typeerror;
-				error(50); // 非数字相减 错误
+				error(5007); // 非数字相减 错误
 			}
 			gen(opr, 0, 3);//中间代码
 		}
@@ -883,7 +766,7 @@ void expression(long long fsys) // simple expression
 				lastsym = Boolsym;
 			}else{
 				lastsym = typeerror;
-				error(50);
+				error(5008);
 			}
 			gen(opr, 0, 21);
 			cx2 = cx;
@@ -897,47 +780,67 @@ void expression(long long fsys) // simple expression
 
 void condition(long long fsys)
 {
+<<<<<<< HEAD
 	long long relop; //临时记录token
+=======
+	long long relop;
+	long long lasttype;
+>>>>>>> 1f59ca542e1d2003975bf1e82a4d3c728be288b6
 
 	if (sym == oddsym) //
 	{
 		getsym();
 		expression(fsys);
+		if(lastsym = intersym){
+			lastsym = Boolsym;
+		}else{
+			lastsym = typeerror;
+			error(5009);
+		}
 		gen(opr, 0, 6);
 	}
-	else
-	{
-		expression(fsys | eql | neq | lss | gtr | leq | geq);
-		if (!(sym & (eql | neq | lss | gtr | leq | geq)))
+	else{
+		expression(fsys | eql | neq | lss | gtr | leq | geq | comma | rparen | rmparen);
+	}
+	if (sym & (eql | neq | lss | gtr | leq | geq)){
+		relop = sym;
+		getsym();
+		lasttype = lastsym;
+		expression(fsys);
+		if(lasttype == intersym && lastsym == intersym){
+			lastsym = Boolsym;
+		}else if(lasttype == intersym && lastsym == realsym){
+			lastsym = Boolsym;
+		}else if(lasttype == realsym && lastsym == realsym){
+			lastsym = Boolsym;
+		}else if(lasttype == realsym && lastsym == intersym){
+			lastsym = Boolsym;
+		}else if(lasttype == Boolsym && lastsym == Boolsym){
+			lastsym = Boolsym;
+		}else{
+			lastsym = typeerror;
+			error(5010);
+		}	
+		switch (relop)
 		{
-			error(20);
-		}
-		else
-		{
-			relop = sym;
-			getsym();
-			expression(fsys);
-			switch (relop)
-			{
-			case eql:
-				gen(opr, 0, 8);
-				break;
-			case neq:
-				gen(opr, 0, 9);
-				break;
-			case lss:
-				gen(opr, 0, 10);
-				break;
-			case geq:
-				gen(opr, 0, 11);
-				break;
-			case gtr:
-				gen(opr, 0, 12);
-				break;
-			case leq:
-				gen(opr, 0, 13);
-				break;
-			}
+		case eql:
+			gen(opr, 0, 8);
+			break;
+		case neq:
+			gen(opr, 0, 9);
+			break;
+		case lss:
+			gen(opr, 0, 10);
+			break;
+		case geq:
+			gen(opr, 0, 11);
+			break;
+		case gtr:
+			gen(opr, 0, 12);
+			break;
+		case leq:
+			gen(opr, 0, 13);
+			break;
 		}
 	}
 }
@@ -954,6 +857,7 @@ void statement(long long fsys) // 程序控制流程
 	if (sym == ident)
 	{
 		i = position(id);
+		/*
 		if (i == 0)
 		{
 			error(11);
@@ -964,6 +868,14 @@ void statement(long long fsys) // 程序控制流程
 			i = 0;
 		}
 		getsym();
+		*/
+		if(table[i].type1 == arraysym){
+			//是数组
+		}else{
+			lasttype = table[i].type2;
+			getsym();
+		}//不是数组，类型存在type2
+
 		if (sym == becomes)
 		{
 			getsym();
@@ -972,10 +884,42 @@ void statement(long long fsys) // 程序控制流程
 		{
 			error(13);
 		}
-		expression(fsys);
+		condition(fsys);
+		// if(lasttype == intersym && lastsym == intersym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == intersym && lastsym == realsym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == realsym && lastsym == realsym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == realsym && lastsym == intersym){
+		// 	lastsym = voiderror;
+		// }else if(lasttype == Boolsym && lasttype == lastsym){
+		// 	lastsym = voiderror;
+		// }else{
+		// 	printf("lastsym=%lld\nlasttype=%lld\n",lastsym,lasttype);
+		// 	lastsym = typeerror;
+		// 	error(5011);
+		// 	}
 		if (i != 0)
 		{
-			gen(sto, lev - table[i].level, table[i].addr);
+			//gen(sto, lev - table[i].level, table[i].addr);
+			switch (table[i].kind)
+			{
+			case variable:
+				if(table[i].type1 == intersym || table[i].type1 == realsym){
+					gen(sto, lev-table[i].level, table[i].addr);
+				}else if(table[i].type1 = arraysym){
+					//arraydo(sto,i);
+				}
+				break;
+			case func:
+				gen(sto, lev-table[i].level, table[i].funcaddr);
+				break;
+			case type:
+				error(56);
+			default:
+				break;
+			}
 		}
 	}
 	else if (sym == callsym)
@@ -1467,4 +1411,5 @@ int main()
 	}
 	fclose(infile);
 	system("pause");
+	///...
 }
