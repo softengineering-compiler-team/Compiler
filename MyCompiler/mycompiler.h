@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <math.h>
+#include <ctype.h>
+#include <string.h>
+#include <stdlib.h>
 
 #define norw 29    // no. of reserved words 29个保留字
 #define txmax 100  // length of identifier table
@@ -151,6 +155,7 @@ struct prod
     long long sym; // 参数类型
 };
 struct prod pnow[15]; // 记录过程或参数的参数信息
+int prodn = 0;
 
 // the following variables for block
 long dx;  // data allocation index
