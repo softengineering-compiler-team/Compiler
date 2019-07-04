@@ -43,130 +43,6 @@ void getch()
 	cc = cc + 1;
 	ch = line[cc];
 }
-/*
-void getsym()
-{
-	long i, j, k;
-
-	while (ch == ' ' || ch == '\t')
-	{
-		getch();
-	}
-	if (isalpha(ch))
-	{ // identified or reserved
-		k = 0;
-		do
-		{
-			if (k < al)
-			{
-				a[k] = ch;
-				k = k + 1;
-			}
-			getch();
-		} while (isalpha(ch) || isdigit(ch));
-		if (k >= kk)
-		{
-			kk = k;
-		}
-		else
-		{
-			do
-			{
-				kk = kk - 1;
-				a[kk] = ' ';
-			} while (k < kk);
-		}
-		strcpy(id, a);
-		i = 0;
-		j = norw - 1;
-		do
-		{
-			k = (i + j) / 2;
-			if (strcmp(id, word[k]) <= 0)
-			{
-				j = k - 1;
-			}
-			if (strcmp(id, word[k]) >= 0)
-			{
-				i = k + 1;
-			}
-		} while (i <= j);
-		if (i - 1 > j)
-		{
-			sym = wsym[k];
-		}
-		else
-		{
-			sym = ident;
-		}
-	}
-	else if (isdigit(ch))
-	{ // number
-		k = 0;
-		num = 0;
-		sym = number;
-		do
-		{
-			num = num * 10 + (ch - '0');
-			k = k + 1;
-			getch();
-		} while (isdigit(ch));
-		if (k > nmax)
-		{
-			error(31);
-		}
-	}
-	else if (ch == ':')
-	{
-		getch();
-		if (ch == '=')
-		{
-			sym = becomes;
-			getch();
-		}
-		else
-		{
-			sym = nul;
-		}
-	}
-	else if (ch == '<')
-	{
-		getch();
-		if (ch == '=')
-		{
-			sym = leq;
-			getch();
-		}
-		else if (ch == '>')
-		{
-			sym = neq;
-			getch();
-		}
-		else
-		{
-			sym = lss;
-		}
-	}
-	else if (ch == '>')
-	{
-		getch();
-		if (ch == '=')
-		{
-			sym = geq;
-			getch();
-		}
-		else
-		{
-			sym = gtr;
-		}
-	}
-	else
-	{
-		sym = ssym[(unsigned char)ch];
-		getch();
-	}
-}
-*/
 void getsym()
 {
 	long i, j, k;
@@ -281,63 +157,69 @@ void getsym()
 			sym = nul;
 		}
 	}
-	else if (ch == '/')
-	{ //新增 /* .. */
+	else if (ch == '/'){
 		getch();
-		if (ch == '*')
-		{
-			flag++;
-			getch();
-			while (flag > 0)
-			{
-				while (ch != '*')
-				{
-					getch();
-				}
+		if (ch == '*'){
+			while(1){
 				getch();
-				if (ch == '/')
-					flag--;
+				if(ch != '*'){
+					continue;
+				}
+				else{
+					getch();
+					if(ch == '/'){
+						break;
+					}
+					else{
+						continue;
+					}
+				}
 			}
 			getch();
 			getsym();
 		}
-		else
-		{
-			sym = ssym[(unsigned char)'/'];
-		}
-	}
-	else if (ch == '*')
-	{ // /* .. */ .. */
-		getch();
-		if (ch == '/')
-		{
+		else if(ch == '/'){
+			cc = ll;
 			getch();
-			if (ch == '*')
-			{
-				flag = 0;
+			getsym();
+		}
+		else{
+			sym = ssym[(unsigned char)'/'];
+		} 
+	}
+	else if (ch == '*') {
+		getch();
+		if(ch == '/'){
+			getch();
+			if(ch == '*'){
 				sym = ssym[(unsigned char)'*'];
-				flag++;
-				getch();
-				while (flag > 0)
-				{
-					while (ch != '*')
-					{
-						getch();
-					}
+				while(1){
 					getch();
-					if (ch == '/')
-						flag--;
+					if(ch != '*'){
+						continue;
+					}
+					else{
+						getch();
+						if(ch == '/'){
+							break;
+						}
+						else{
+							continue;
+						}
+					}
 				}
+			getch();
+			}
+			else if(ch == '/'){
+				cc = ll;
+				sym = ssym[(unsigned char)'*'];
 				getch();
 			}
-			else
-			{
-				printf("a superflous note symbol \n");
-				sym = nul;
+			else{
+				printf("'*/'not match\n");
 			}
 		}
-		else
-		{
+		else{
 			sym = ssym[(unsigned char)'*'];
 		}
 	}
