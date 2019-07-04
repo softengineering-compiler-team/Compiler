@@ -1,8 +1,5 @@
 const m=7, n=85;
 var x,y,z,q,r : integer;
-    zz : Boolean;
 begin
-    zz:=true;
-    if zz then x:=m;
-    else x:=n;
+    x:=m;
 end.
