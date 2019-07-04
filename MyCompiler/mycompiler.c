@@ -1,6 +1,8 @@
 // pl/0 compiler with code generation
 #include "mycompiler.h"
 
+int mycnt = 0;
+
 void error(long n)
 {
 	long i;
@@ -1066,7 +1068,7 @@ void statement(long long fsys) // 程序控制流程
 }
 
 void block(long long fsys) // 程序 -> 分程序
-{
+{	
 	long i,j,k;
 	long tx0; // initial table index
 	long cx0; // initial code index
@@ -1140,7 +1142,7 @@ void block(long long fsys) // 程序 -> 分程序
 				}
 			} while (sym == ident);
 		}
-		while (sym == procsym)
+		while (sym == procsym || sym == funcsym) // function and procedure
 		{
 			getsym();
 			if (sym == ident)
@@ -1182,8 +1184,16 @@ void block(long long fsys) // 程序 -> 分程序
 	code[table[tx0].addr].a = cx;
 	table[tx0].addr = cx; // start addr of code
 	cx0 = cx;
-	gen(Int, 0, dx);
-	statement(fsys | semicolon | endsym);
+	for(j=0;j<table[tx0].n;j++){
+		gen(sto, lev-table[tx2].level, table[tx2].addr-j);
+	}
+	gen(Int, 0, dx+table[tx0].n);
+	if(sym == beginsym){
+		statement(fsys | semicolon | endsym);
+	}else{
+		error(54);
+		getsym();
+	}
 	gen(opr, 0, 0); // return
 	test(fsys, 0, 8);
 	listcode(cx0);
