@@ -1,6 +1,7 @@
 // pl/0 compiler with code generation
 #include "mycompiler.h"
-
+// ...
+/* */
 int mycnt = 0;
 
 void error(long n)
