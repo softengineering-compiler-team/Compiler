@@ -1,5 +1,22 @@
 const m=7, n=85;
 var x,y,z,q,r : integer;
+procedure p(n:integer);
+function f(n:integer):integer;
 begin
-    x:=m;
+	
+    x:=2;
+	read(x);
+	read(1,2);
+	read(p);
+	read(f);
+	write(x);
+	write(2);
+	write(2.1);
+	write(2,1);
+	write(p);
+	write(f);
+	
+	
+	
+
 end.
