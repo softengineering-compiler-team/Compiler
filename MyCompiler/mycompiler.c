@@ -1,7 +1,5 @@
 // pl/0 compiler with code generation
 #include "mycompiler.h"
-// ...
-/* */
 int mycnt = 0;
 
 void error(long n)
@@ -283,11 +281,6 @@ void getsym()
 		getch();
 	}
 }
-
-
-//
-
-
 
 void gen(enum fct x, long y, double z)
 {
@@ -868,7 +861,8 @@ void statement(long long fsys) // 程序控制流程
 		if(table[i].type1 == arraysym){
 			//是数组
 		}else{
-			lasttype = table[i].type2;
+			printf("\ntable[%d].tpye1=%lld\ntable[%d].type2=%lld\n",i,table[i].type1,i,table[i].type2);
+			lasttype = table[i].type1;
 			getsym();
 		}//不是数组，类型存在type2
 
@@ -881,21 +875,21 @@ void statement(long long fsys) // 程序控制流程
 			error(13);
 		}
 		condition(fsys);
-		// if(lasttype == intersym && lastsym == intersym){
-		// 	lastsym = voiderror;
-		// }else if(lasttype == intersym && lastsym == realsym){
-		// 	lastsym = voiderror;
-		// }else if(lasttype == realsym && lastsym == realsym){
-		// 	lastsym = voiderror;
-		// }else if(lasttype == realsym && lastsym == intersym){
-		// 	lastsym = voiderror;
-		// }else if(lasttype == Boolsym && lasttype == lastsym){
-		// 	lastsym = voiderror;
-		// }else{
-		// 	printf("lastsym=%lld\nlasttype=%lld\n",lastsym,lasttype);
-		// 	lastsym = typeerror;
-		// 	error(5011);
-		// 	}
+		if(lasttype == intersym && lastsym == intersym){
+			lastsym = voiderror;
+		}else if(lasttype == intersym && lastsym == realsym){
+			lastsym = voiderror;
+		}else if(lasttype == realsym && lastsym == realsym){
+			lastsym = voiderror;
+		}else if(lasttype == realsym && lastsym == intersym){
+			lastsym = voiderror;
+		}else if(lasttype == Boolsym && lasttype == lastsym){
+			lastsym = voiderror;
+		}else{
+			printf("lastsym=%lld\nlasttype=%lld\n",lastsym,lasttype);
+			lastsym = typeerror;
+			error(5011);
+			}
 		if (i != 0)
 		{
 			//gen(sto, lev - table[i].level, table[i].addr);
@@ -1141,6 +1135,7 @@ void block(long long fsys) // 程序 -> 分程序
 
 long base(long b, long l)
 {
+	return ;
 	long b1;
 
 	b1 = b;
@@ -1154,6 +1149,7 @@ long base(long b, long l)
 
 void interpret()
 {
+	return ;
 	long p, b, t;  // program-, base-, topstack-registers
 	instruction i; // instruction register
 
@@ -1389,5 +1385,4 @@ int main()
 	}
 	fclose(infile);
 	system("pause");
-	///...
 }
