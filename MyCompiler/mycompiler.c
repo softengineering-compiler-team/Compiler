@@ -664,7 +664,6 @@ void enter(enum object k)
 long position(char *id)
 { // find identifier id in table
 	long i;
-
 	strcpy(table[0].name, id);
 	i = tx;
 	while (strcmp(table[i].name, id) != 0)
@@ -749,9 +748,7 @@ void vardeclaration()
 			{
 				i = position(id); //在符号表中找到 标识符 的位置 返给下表付给i
 				if (i == 0)
-				{
 					error(11);
-				}
 				sym = table[i].type1;
 				if (sym == intersym || sym == realsym || sym == Boolsym)
 				{
@@ -799,14 +796,14 @@ void vardeclaration()
 void typeexpression()
 {
 	long long sym1;
-	long upper, bottom, size;
+	long bottom, upper, size;
 	long tx1;
 	int drtnum = 1;
 	int j;
 	if (sym == intersym || sym == realsym || sym == Boolsym)
 	{
 		enter(type);
-		getsym;
+		getsym();
 	}
 	else if (sym == arraysym)
 	{
@@ -984,7 +981,7 @@ void factor(long long fsys)
 					{
 						gen(lod, lev - table[i].level, table[i].addr); // lod lev,addr 中间代码，相当于将 var 的值装入栈顶
 						lastsym = type;
-						getsym;
+						getsym();
 					}
 					else
 					{ // var 类型是 array时
@@ -1406,13 +1403,9 @@ void statement(long long fsys) // 程序控制流程
 		} //不是数组，类型存在type2
 
 		if (sym == becomes)
-		{
 			getsym();
-		}
 		else
-		{
 			error(13);
-		}
 		condition(fsys);
 		if (lasttype == intersym && lastsym == intersym)
 			lastsym = voiderror;
@@ -1444,7 +1437,10 @@ void statement(long long fsys) // 程序控制流程
 				gen(sto, lev - table[i].level, table[i].funcaddr);
 				break;
 			case type:
-				error(56);
+				{
+					error(56);
+					break;
+				}
 			default:
 				break;
 			}
@@ -1478,23 +1474,21 @@ void statement(long long fsys) // 程序控制流程
 						error(40);
 					if (k != table[i].n)
 					{
-						printf("Parameter cnts not match\n");
+						printf("Parameter counts not match\n");
 						error(41);
 					}
 					gen(cal, lev - table[i].level, table[i].addr);
 					for (k = 0; k < table[i].n; k++)
-						gen(opr, 0, 7);
+						gen(opr, 0, 7); //实参弹入栈
 					if (sym == funcsym)
 						gen(lod, lev - table[i].level, table[i].addr);
+						// 返回值入栈
 				}
 				else //无参数
 					gen(cal, lev - table[i].level, table[i].addr);
 			}
 			else
-			{
 				error(15);
-			}
-			getsym();
 		}
 	}
 	else if (sym == ifsym)
@@ -1649,6 +1643,7 @@ void statement(long long fsys) // 程序控制流程
 					}
 					else if (table[i].type1 == realsym || table[i].type1 == intersym)
 					{
+						getsym();
 						gen(opr, 0, 14);
 						gen(sto, lev - table[i].level, table[i].addr);
 					}
@@ -1680,9 +1675,7 @@ void statement(long long fsys) // 程序控制流程
 			}
 			gen(opr, 0, 15); //获取回车
 			if (sym == rparen)
-			{
 				getsym();
-			}
 		}
 	}
 	test(fsys, 0, 19);
@@ -1714,11 +1707,9 @@ void block(long long fsys) // 程序 -> 分程序
 	}
 	tx2 = tx;
 	if (lev > levmax)
-	{
 		error(32);
-	}
 	do
-	{ // Const a=1,b=2;
+	{
 		if (sym == constsym)
 		{
 			getsym();
@@ -1736,6 +1727,18 @@ void block(long long fsys) // 程序 -> 分程序
 					error(501);
 			} while (sym == ident);
 		}
+		if (sym == varsym)
+		{
+			getsym();
+			do
+			{
+				vardeclaration();
+				if (sym == semicolon)
+					getsym();
+				else
+					error(502);
+			} while (sym == ident);
+		}
 		if (sym == typesym)
 		{
 			getsym();
@@ -1746,23 +1749,6 @@ void block(long long fsys) // 程序 -> 分程序
 					getsym();
 				else
 					error(33);
-			} while (sym == ident);
-		}
-		if (sym == varsym)
-		{
-			getsym();
-			do
-			{
-				vardeclaration();
-				while (sym == comma)
-				{
-					getsym();
-					vardeclaration();
-				}
-				if (sym == semicolon)
-					getsym();
-				else
-					error(502);
 			} while (sym == ident);
 		}
 		while (sym == procsym || sym == funcsym) // function and procedure
@@ -1888,7 +1874,8 @@ void block(long long fsys) // 程序 -> 分程序
 		}
 		test(statbegsys | ident, declbegsys, 7);
 	} while (sym & declbegsys);
-	code[table[tx0].addr].a = cx;
+
+	code[table[tx0].addr].a = cx;  //将跳转地址改为正确的CX以保证调用返回的正确性
 	table[tx0].addr = cx; // start addr of code
 	cx0 = cx;
 	for (j = 0; j < table[tx0].n; j++)
