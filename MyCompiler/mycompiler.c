@@ -102,116 +102,232 @@ void switchType(long long sym)
 {
 	switch (sym)
 	{
-	case nul:printf("nul");break;
-	case ident:printf("ident");break;
-	case number:printf("number");break;
-	case plus:printf("plus");break;
-	case minus:printf("minus");break;
-	case times:printf("times");break;
-	case slash:printf("slash");break;
-	case oddsym:printf("oddsym");break;
-	case eql:printf("eql");break;
-	case neq:printf("neq");break;
-	case lss:printf("lss");break;
-	case leq:printf("leq");break;
-	case gtr:printf("gtr");break;
-	case geq:printf("geq");break;
-	case lparen:printf("lparen");break;
-	case rparen:printf("rparen");break;
-	case comma:printf("comma");break;
-	case semicolon:printf("semicolon");break;
-	case period:printf("period");break;
-	case becomes:printf("becomes");break;
-	case beginsym:printf("beginsym");break;
-	case endsym:printf("endsym");break;
-	case ifsym:printf("ifsym");break;
-	case thensym:printf("thensym");break;
-	case whilesym:printf("whilesym");break;
-	case dosym:printf("dosym");break;
-	case callsym:printf("callsym");break;
-	case constsym:printf("constsym");break;
-	case varsym:printf("varsym");break;
-	case procsym:printf("procsym");break;
-	case typesym:printf("typesym");break;
-	case arraysym:printf("arraysym");break;
-	case ofsym:printf("ofsym");break;
-	case intersym:printf("intersym");break;
-	case realsym:printf("realsym");break;
-	case Boolsym:printf("Boolsym");break;
-	case funcsym:printf("funcsym");break;
-	case elsesym:printf("elsesym");break;
-	case writesym:printf("writesym");break;
-	case readsym:printf("readsym");break;
-	case exitsym:printf("exitsym");break;
-	case or:printf("or");break;
-	case and:printf("and");break;
-	case not:printf("not");break;
-	case div:printf("div");break;
-	case mod:printf("mod");break;
-	case truesym:printf("truesym");break;
-	case falsesym:printf("falsesym");break;
-	case lmparen:printf("lmparen");break;
-	case rmparen:printf("rmparen");break;
-	case typeerror:printf("typeerror");break;
-	case voiderror:printf("voiderror");break;
-	case dotdot:printf("dotdot");break;
-	default: break;
+	case nul:
+		printf("nul");
+		break;
+	case ident:
+		printf("ident");
+		break;
+	case number:
+		printf("number");
+		break;
+	case plus:
+		printf("plus");
+		break;
+	case minus:
+		printf("minus");
+		break;
+	case times:
+		printf("times");
+		break;
+	case slash:
+		printf("slash");
+		break;
+	case oddsym:
+		printf("oddsym");
+		break;
+	case eql:
+		printf("eql");
+		break;
+	case neq:
+		printf("neq");
+		break;
+	case lss:
+		printf("lss");
+		break;
+	case leq:
+		printf("leq");
+		break;
+	case gtr:
+		printf("gtr");
+		break;
+	case geq:
+		printf("geq");
+		break;
+	case lparen:
+		printf("lparen");
+		break;
+	case rparen:
+		printf("rparen");
+		break;
+	case comma:
+		printf("comma");
+		break;
+	case semicolon:
+		printf("semicolon");
+		break;
+	case period:
+		printf("period");
+		break;
+	case becomes:
+		printf("becomes");
+		break;
+	case beginsym:
+		printf("beginsym");
+		break;
+	case endsym:
+		printf("endsym");
+		break;
+	case ifsym:
+		printf("ifsym");
+		break;
+	case thensym:
+		printf("thensym");
+		break;
+	case whilesym:
+		printf("whilesym");
+		break;
+	case dosym:
+		printf("dosym");
+		break;
+	case callsym:
+		printf("callsym");
+		break;
+	case constsym:
+		printf("constsym");
+		break;
+	case varsym:
+		printf("varsym");
+		break;
+	case procsym:
+		printf("procsym");
+		break;
+	case typesym:
+		printf("typesym");
+		break;
+	case arraysym:
+		printf("arraysym");
+		break;
+	case ofsym:
+		printf("ofsym");
+		break;
+	case intersym:
+		printf("intersym");
+		break;
+	case realsym:
+		printf("realsym");
+		break;
+	case Boolsym:
+		printf("Boolsym");
+		break;
+	case funcsym:
+		printf("funcsym");
+		break;
+	case elsesym:
+		printf("elsesym");
+		break;
+	case writesym:
+		printf("writesym");
+		break;
+	case readsym:
+		printf("readsym");
+		break;
+	case exitsym:
+		printf("exitsym");
+		break;
+	case or:
+		printf("or");
+		break;
+	case and:
+		printf("and");
+		break;
+	case not:
+		printf("not");
+		break;
+	case div:
+		printf("div");
+		break;
+	case mod:
+		printf("mod");
+		break;
+	case truesym:
+		printf("truesym");
+		break;
+	case falsesym:
+		printf("falsesym");
+		break;
+	case lmparen:
+		printf("lmparen");
+		break;
+	case rmparen:
+		printf("rmparen");
+		break;
+	case typeerror:
+		printf("typeerror");
+		break;
+	case voiderror:
+		printf("voiderror");
+		break;
+	case dotdot:
+		printf("dotdot");
+		break;
+	default:
+		break;
 	}
-	return ;
+	return;
 }
 
 void Tableprint(int i)
 {
-	printf("\nNow printing table[%d]:\n",i);
-	printf("\t.name =\t\t%s\n",table[i].name);
+	printf("\nNow printing table[%d]:\n", i);
+	printf("\t.name =\t\t%s\n", table[i].name);
 	printf("\t.kind =\t\t");
-	switch(table[i].kind)
+	switch (table[i].kind)
 	{
 	case constant:
-		puts("constant");break;
+		puts("constant");
+		break;
 	case variable:
-		puts("variable");break;
+		puts("variable");
+		break;
 	case proc:
-		puts("procedure");break;
+		puts("procedure");
+		break;
 	case type:
-		puts("type");break;
+		puts("type");
+		break;
 	case func:
-		puts("function");break;
+		puts("function");
+		break;
 	}
-	printf("\t.val =\t\t%.6lf\n",table[i].val);
-	printf("\t.level =\t%ld\n",table[i].level);
-	printf("\t.addr =\t\t%ld\n",table[i].addr);
-	printf("\t.funcaddr =\t%ld\n",table[i].funcaddr);
+	printf("\t.val =\t\t%.6lf\n", table[i].val);
+	printf("\t.level =\t%ld\n", table[i].level);
+	printf("\t.addr =\t\t%ld\n", table[i].addr);
+	printf("\t.funcaddr =\t%ld\n", table[i].funcaddr);
 	int j = 0;
 	printf("\t.paral[] =\n");
-	while(table[i].paral[j]!=NULL)
+	while (table[i].paral[j] != NULL)
 	{
-		printf("\t\t%d =\t",j);
+		printf("\t\t%d =\t", j);
 		switchType(table[i].paral[j]);
 		puts("");
 		j++;
 	}
-	printf("\t.type1 =\t");switchType(table[i].type1);puts("");
-	printf("\t.size =\t\t%ld\n",table[i].size);
-	printf("\t.drt =\t\t%ld\n",table[i].drt);
+	printf("\t.type1 =\t");
+	switchType(table[i].type1);
+	puts("");
+	printf("\t.size =\t\t%ld\n", table[i].size);
+	printf("\t.drt =\t\t%ld\n", table[i].drt);
 	printf("\t.low[] =\n\t\t");
-	j=0;
-	while(table[i].low[j]!=NULL)
+	j = 0;
+	while (table[i].low[j] != NULL)
 	{
-		printf("%ld\t",table[i].low[j]);
+		printf("%ld\t", table[i].low[j]);
 		j++;
 	}
 	puts("");
 	printf("\t.high[] =\n\t\t");
-	j=0;
-	while(table[i].high[j]!=NULL)
+	j = 0;
+	while (table[i].high[j] != NULL)
 	{
-		printf("%ld\t",table[i].high[j]);
+		printf("%ld\t", table[i].high[j]);
 		j++;
 	}
 	puts("");
-	printf("\t.type2 =\t\t");switchType(table[i].type2);puts("");
-	printf("\t.n =\t\t%d\n",table[i].n);
+	printf("\t.type2 =\t\t");
+	switchType(table[i].type2);
+	puts("");
+	printf("\t.n =\t\t%d\n", table[i].n);
 }
 
 void error(long n)
@@ -228,7 +344,7 @@ void error(long n)
 }
 
 void getch()
-{
+{ //文件读入并输出
 	if (cc == ll)
 	{
 		if (feof(infile))
@@ -256,8 +372,8 @@ void getch()
 }
 void getsym()
 {
-	printf("debug start:\n");
-	printf("now sym=");switchType(sym);puts("");
+	// printf("debug start:\n");
+	// printf("now sym=");switchType(sym);puts("");
 	long i, j, k;
 	int flag = 0;
 	double t = 1.0;			//标记小数点后的位数
@@ -478,8 +594,8 @@ void getsym()
 		sym = ssym[(unsigned char)ch];
 		getch();
 	}
-	printf("after getsym now sym=");switchType(sym);puts("");
-	printf("debug ends\n");
+	// printf("after getsym now sym=");switchType(sym);puts("");
+	// printf("debug ends\n");
 }
 
 void gen(enum fct x, long y, double z)
@@ -683,28 +799,28 @@ void vardeclaration()
 void typeexpression()
 {
 	long long sym1;
-	long upper,bottom,size;
+	long upper, bottom, size;
 	long tx1;
 	int drtnum = 1;
 	int j;
-	if(sym == intersym || sym == realsym || sym == Boolsym)
+	if (sym == intersym || sym == realsym || sym == Boolsym)
 	{
 		enter(type);
 		getsym;
 	}
-	else if(sym == arraysym)
+	else if (sym == arraysym)
 	{
 		sym1 = sym;
 		getsym();
-		if(sym == lmparen)// [
+		if (sym == lmparen) // [
 		{
 			getsym();
-			if(sym == intersym)
+			if (sym == intersym)
 			{
 				bottom = num;
 				getch();
 				getsym();
-				if(sym == dotdot) // ..
+				if (sym == dotdot) // ..
 				{
 					getsym();
 					sym = sym1;
@@ -715,13 +831,15 @@ void typeexpression()
 					table[tx].high[drtnum] = upper;
 					table[tx].drt++;
 					getsym();
-					if(sym != rparen) error(101);
+					if (sym != rmparen)
+						error(101);
 					getsym();
-					if(sym != ofsym) error(102);
+					if (sym != ofsym)
+						error(102);
 					else
 					{
 						getsym();
-						if(sym == intersym || sym == realsym || sym == Boolsym)
+						if (sym == intersym || sym == realsym || sym == Boolsym)
 						{
 							table[tx].type2 = sym; // type2 中存储了数组中变量的类型
 							table[tx].drt = 1;
@@ -729,18 +847,18 @@ void typeexpression()
 						}
 						else
 						{
-							while(sym == arraysym)
-							{//多维数组开辟
+							while (sym == arraysym)
+							{ //多维数组开辟
 								table[tx].drt++;
 								drtnum++;
 								getsym();
-								if(sym == lmparen) // [
+								if (sym == lmparen) // [
 								{
 									getsym(); // a
 									table[tx].low[drtnum] = num;
 									getch();
 									getsym(); // ..
-									getsym();// b
+									getsym(); // b
 									table[tx].high[drtnum] = num;
 									getsym(); // ]
 									getsym(); // of
@@ -751,7 +869,7 @@ void typeexpression()
 									error(34);
 								table[tx].size = size;
 							}
-							if(sym == intersym || sym == realsym || sym == Boolsym)
+							if (sym == intersym || sym == realsym || sym == Boolsym)
 								table[tx].type2 = sym;
 						}
 						getsym();
@@ -773,16 +891,16 @@ void typeexpression()
 void typedeclaration()
 {
 	char typename[al + 1];
-	if(sym == ident)
+	if (sym == ident)
 	{
 		strcpy(typename, id);
 		getsym();
-		if(sym == eql || sym == becomes)
+		if (sym == eql || sym == becomes)
 		{
-			if(sym == becomes)
+			if (sym == becomes)
 				error(1);
 			getsym();
-			strcpy(id,typename);
+			strcpy(id, typename);
 			typeexpression();
 		}
 		else
@@ -802,39 +920,38 @@ void listcode(long cx0)
 	}
 }
 
-//void expression(long long);
-void arraydo(enum fct x,int i)
+void arraydo(enum fct x, int i)
 {
-	long d,t;
+	long d, t;
 	switch (x)
 	{
 	case sto:
 		gen(lit, 0, table[i].drt);
-		gen(sto, lev-table[i].level, table[i].addr+1);
-		for(t=1, d=1; t<=table[i].drt; t++)
-		{	//产生指令存入array上下界和维数
+		gen(sto, lev - table[i].level, table[i].addr + 1);
+		for (t = 1, d = 1; t <= table[i].drt; t++)
+		{ //产生指令存入array上下界和维数
 			d++;
 			gen(lit, 0, table[i].low[t]);
-			gen(sto, lev-table[i].level, table[i].addr+d);
+			gen(sto, lev - table[i].level, table[i].addr + d);
 			d++;
 			gen(lit, 0, table[i].high[t]);
-			gen(sto, lev-table[i].level, table[i].addr+d);
+			gen(sto, lev - table[i].level, table[i].addr + d);
 		}
-	break;
+		break;
 	case lod:
 		gen(lit, 0, table[i].drt);
-		gen(sto, lev-table[i].level, table[i].addr+1);
-		for(t=1, d=1; t<=table[i].drt; t++)
-		{	//产生指令存入array上下界和维数
+		gen(sto, lev - table[i].level, table[i].addr + 1);
+		for (t = 1, d = 1; t <= table[i].drt; t++)
+		{ //产生指令存入array上下界和维数
 			d++;
 			gen(lit, 0, table[i].low[t]);
-			gen(sto, lev-table[i].level, table[i].addr+d);
+			gen(sto, lev - table[i].level, table[i].addr + d);
 			d++;
 			gen(lit, 0, table[i].high[t]);
-			gen(sto, lev-table[i].level, table[i].addr+d);
+			gen(sto, lev - table[i].level, table[i].addr + d);
 		}
-		gen(lay, lev-table[i].level, table[i].addr);
-	break;
+		gen(lay, lev - table[i].level, table[i].addr);
+		break;
 	}
 }
 
@@ -871,22 +988,22 @@ void factor(long long fsys)
 					}
 					else
 					{ // var 类型是 array时
-						if(table[i].type1 == arraysym)
-						{//数组类型
+						if (type == arraysym)
+						{ //数组类型
 							away = 0;
 							getsym();
-							for(j=0; j<table[i].drt; j++)
+							for (j = 0; j < table[i].drt; j++)
 							{
-								if(sym == lmparen)
+								if (sym == lmparen)
 								{
 									getsym();
 									condition(fsys | rmparen);
-									if(lastsym != intersym)
+									if (lastsym != intersym)
 									{
 										lastsym = typeerror;
 										error(49);
 									}
-									if(lastsym == rmparen)
+									if (lastsym == rmparen)
 										getsym();
 									else
 										error(40);
@@ -894,7 +1011,7 @@ void factor(long long fsys)
 								else
 									error(46);
 							}
-							if(lastsym != typeerror)
+							if (lastsym != typeerror)
 								lastsym = table[i].type2;
 							arraydo(lod, i);
 						}
@@ -905,62 +1022,56 @@ void factor(long long fsys)
 					error(21);
 					break;
 
-			
-
-
 				case func:
 					getsym();
 					k = 0;
-					if(sym == lparen) // 有参数
+					if (sym == lparen) // 有参数
 					{
 						getsym();
 						condition(fsys | comma | rparen);
-						if(lastsym != table[i].paral[k])
+						if (lastsym != table[i].paral[k])
 						{
 							error(49);
 							lastsym = typeerror;
 						}
-						while(sym == comma)
+						while (sym == comma)
 						{
 							k++;
 							getsym();
 							condition(fsys | comma | rparen);
-							if(lastsym != table[i].paral[k])
+							if (lastsym != table[i].paral[k])
 							{
 								error(49);
 								lastsym = typeerror;
 							}
 						}
-						if(sym == rparen) // )
+						if (sym == rparen) // )
 						{
-							gen(cal, lev-table[i].level, table[i].addr);
+							gen(cal, lev - table[i].level, table[i].addr);
 							getsym();
 						}
-						for(k=0; k<table[i].n; k++)
+						for (k = 0; k < table[i].n; k++)
 						{
 							gen(opr, 0, 7); //把实参弹出
 						}
-						gen(lod, lev-table[i].level, table[i].funcaddr);
-						if(lastsym != typeerror)
+						gen(lod, lev - table[i].level, table[i].funcaddr);
+						if (lastsym != typeerror)
 							lastsym = table[i].type1;
 					}
-					else if(sym == becomes)
-					{	// 返回语句
+					else if (sym == becomes)
+					{ // 返回语句
 						// 返回值放到栈顶
-						gen(lod, lev-table[i].level, table[i].funcaddr);
+						gen(lod, lev - table[i].level, table[i].funcaddr);
 						lastsym = table[i].type1;
 					}
 					else
-					{	// 无参函数
-						gen(cal, lev-table[i].level, table[i].addr);
-						gen(lod, lev-table[i].level, table[i].funcaddr);
+					{ // 无参函数
+						gen(cal, lev - table[i].level, table[i].addr);
+						gen(lod, lev - table[i].level, table[i].funcaddr);
 						lastsym = table[i].type1;
-
 					}
 					break;
-
 				}
-				
 			}
 		}
 		else if (sym == intersym || sym == realsym) // 对于 int or real类型的 单词 进行装入
@@ -974,19 +1085,19 @@ void factor(long long fsys)
 			lastsym = sym;
 			getsym();
 		}
-		else if(sym == not)
+		else if (sym == not)
 		{
 			getsym();
 			factor(fsys);
 			gen(opr, 0, 22);
 		}
-		else if(sym == truesym)
+		else if (sym == truesym)
 		{
 			gen(lit, 0, 1);
 			lastsym = Boolsym;
 			getsym();
 		}
-		else if(sym == falsesym)
+		else if (sym == falsesym)
 		{
 			gen(lit, 0, 1);
 			lastsym = Boolsym;
@@ -1268,25 +1379,28 @@ void statement(long long fsys) // 程序控制流程
 	if (sym == ident)
 	{
 		i = position(id);
-		/*
-		if (i == 0)
-		{
-			error(11);
-		}
-		else if (table[i].kind != variable)
-		{ // assignment to non-variable
-			error(12);
-			i = 0;
-		}
-		getsym();
-		*/
 		if (table[i].type1 == arraysym)
 		{
-			//是数组
+			getsym();
+			for (ii = 0; ii < table[i].drt; ii++)
+			{
+				if (sym == lparen)
+				{
+					getsym();
+					condition(fsys | rmparen);
+					if (lastsym != intersym)
+						error(46);
+					lasttype = lastsym;
+					if (sym == rmparen)
+						getsym();
+				}
+				else
+					error(46);
+			}
+			lasttype = table[i].type2; // 数组元素的类型
 		}
 		else
 		{
-			printf("\ntable[%d].tpye1=%lld\ntable[%d].type2=%lld\n", i, table[i].type1, i, table[i].type2);
 			lasttype = table[i].type1;
 			getsym();
 		} //不是数组，类型存在type2
@@ -1301,28 +1415,17 @@ void statement(long long fsys) // 程序控制流程
 		}
 		condition(fsys);
 		if (lasttype == intersym && lastsym == intersym)
-		{
 			lastsym = voiderror;
-		}
 		else if (lasttype == intersym && lastsym == realsym)
-		{
 			lastsym = voiderror;
-		}
 		else if (lasttype == realsym && lastsym == realsym)
-		{
 			lastsym = voiderror;
-		}
 		else if (lasttype == realsym && lastsym == intersym)
-		{
 			lastsym = voiderror;
-		}
 		else if (lasttype == Boolsym && lasttype == lastsym)
-		{
 			lastsym = voiderror;
-		}
 		else
 		{
-			printf("lastsym=%lld\nlasttype=%lld\n", lastsym, lasttype);
 			lastsym = typeerror;
 			error(5011);
 		}
@@ -1333,13 +1436,9 @@ void statement(long long fsys) // 程序控制流程
 			{
 			case variable:
 				if (table[i].type1 == intersym || table[i].type1 == realsym)
-				{
 					gen(sto, lev - table[i].level, table[i].addr);
-				}
 				else if (table[i].type1 = arraysym)
-				{
-					//arraydo(sto,i);
-				}
+					arraydo(sto, i);
 				break;
 			case func:
 				gen(sto, lev - table[i].level, table[i].funcaddr);
@@ -1353,21 +1452,43 @@ void statement(long long fsys) // 程序控制流程
 	}
 	else if (sym == callsym)
 	{
+		int k = 0;
 		getsym();
 		if (sym != ident)
-		{
 			error(14);
-		}
 		else
 		{
 			i = position(id);
 			if (i == 0)
-			{
 				error(11);
-			}
 			else if (table[i].kind == proc)
 			{
-				gen(cal, lev - table[i].level, table[i].addr);
+				getsym();
+				if (sym == lparen) //有参数
+				{
+					do
+					{
+						getsym();
+						condition(fsys | comma | rparen);
+						k++;
+					} while (sym == comma);
+					if (sym == rparen)
+						getsym();
+					else
+						error(40);
+					if (k != table[i].n)
+					{
+						printf("Parameter cnts not match\n");
+						error(41);
+					}
+					gen(cal, lev - table[i].level, table[i].addr);
+					for (k = 0; k < table[i].n; k++)
+						gen(opr, 0, 7);
+					if (sym == funcsym)
+						gen(lod, lev - table[i].level, table[i].addr);
+				}
+				else //无参数
+					gen(cal, lev - table[i].level, table[i].addr);
 			}
 			else
 			{
@@ -1380,22 +1501,20 @@ void statement(long long fsys) // 程序控制流程
 	{
 		getsym();
 		condition(fsys | thensym | dosym);
+		if (lastsym != Boolsym)
+		{
+			lastsym = typeerror;
+			error(52);
+		}
 		if (sym == thensym)
-		{
 			getsym();
-		}
 		else
-		{
 			error(16);
-		}
 		cx1 = cx; //cx1指向当前代码位置
 		gen(jpc, 0, 0);
 		statement(fsys | semicolon | endsym | elsesym);
-		//code[cx1].a = cx;
 		if (sym == semicolon)
-		{
 			getsym();
-		}
 		if (sym == elsesym)
 		{
 			getsym();
@@ -1423,42 +1542,53 @@ void statement(long long fsys) // 程序控制流程
 		while (sym == semicolon || (sym & statbegsys))
 		{
 			if (sym == semicolon)
-			{
 				getsym();
-			}
 			else
-			{
 				error(10);
-			}
 			statement(fsys | semicolon | endsym);
 		}
 		if (sym == endsym)
-		{
 			getsym();
-		}
 		else
-		{
 			error(17);
-		}
 	}
 	else if (sym == whilesym)
 	{
+		whilenum++;
 		cx1 = cx;
 		getsym();
 		condition(fsys | dosym);
+		if (lastsym != Boolsym)
+		{
+			lastsym = typeerror;
+			error(52);
+		}
 		cx2 = cx;
 		gen(jpc, 0, 0);
 		if (sym == dosym)
-		{
 			getsym();
-		}
 		else
-		{
 			error(18);
-		}
 		statement(fsys);
 		gen(jmp, 0, cx1);
 		code[cx2].a = cx;
+		if (exitcx != 0)
+		{
+			code[exitcx].a = cx;
+			exitcx = 0;
+		}
+		whilenum--;
+	}
+	else if (sym == exitsym)
+	{
+		if (whilenum == 0)
+			error(47);
+		else
+		{
+			exitcx = cx;
+			gen(jmp, 0, 0);
+		}
+		getsym();
 	}
 	else if (sym == writesym)
 	{
@@ -1469,116 +1599,92 @@ void statement(long long fsys) // 程序控制流程
 			{
 				getsym();
 				condition(fsys | rparen | comma);
-				if (lastsym != intersym && lastsym != realsym)
-					{
-						lastsym = typeerror;
-						error(53);
-					}
-				
-				if(lastsym == intersym)
+				if (lastsym != intersym && lastsym != realsym && lastsym != constsym)
 				{
-					gen(opr, 0, 16);
-				}	
-				else if(lastsym == realsym)
-				{
-					gen(opr, 0, 24);
+					lastsym = typeerror;
+					error(53);
 				}
-				
-				
+
+				if (lastsym == intersym)
+					gen(opr, 0, 16); // write(int)
+				else if (lastsym == realsym)
+					gen(opr, 0, 24); // write(real)
 			} while (sym == comma);
-			if(sym !=rparen)
-			{
+			if (sym != rparen)
 				error(35);
-			}
 			else
-			{
 				getsym();
-			}
-			gen(opr, 0, 17);
-			
-			
+			gen(opr, 0, 17); // write(/n)
 		}
 		else
-		{
 			error(35);
-		}
-		
-
 	}
-
 	else if (sym == readsym)
 	{
 		getsym();
-		if (sym != lparen){
+		if (sym != lparen)
 			error(35);
-		}
-		else{
+		else
+		{
 			//while内获取括号内变量，有逗号则继续获取
-			while(1){
+			while (1)
+			{
+				if (sym != comma)
+					break;
 				getsym();
-				if(sym==ident){
+				if (sym == ident)
 					i = position(id);
-				
-				}
-				else{
-					i=0;
-				}
-				if(i==0){
+				else
+					i = 0;
+				if (i == 0)
 					error(36);
-				}
-				else{
-					if(table[i].kind==proc||table[i].kind==func||table[i].kind==constant||table[i].type1==Boolsym){
+				else
+				{
+					if (table[i].kind == proc || table[i].kind == func || table[i].kind == constant || table[i].type1 == Boolsym)
+					{
 						error(12);
-						i=0;
+						i = 0;
+						getsym();
+						continue;
 					}
-					else if(table[i].type1==realsym||table[i].type1==intersym){
+					else if (table[i].type1 == realsym || table[i].type1 == intersym)
+					{
 						gen(opr, 0, 14);
 						gen(sto, lev - table[i].level, table[i].addr);
 					}
-					else if(table[i].type1==arraysym && (table[i].type2==realsym || table[i].type2 == intersym))
-					{//read数组函数位置
+					else if (table[i].type1 == arraysym && (table[i].type2 == realsym || table[i].type2 == intersym))
+					{ //read数组函数位置
 						getsym();
-						for( ii = 0; ii<table[i].drt; ii++){
-							if(sym == lmparen){
+						for (ii = 0; ii < table[i].drt; ii++)
+						{
+							if (sym == lmparen)
+							{
 								getsym();
-								condition(fsys|rmparen);
-								if(lastsym!=intersym){
+								condition(fsys | rmparen);
+								if (lastsym != intersym)
 									error(46);
-								}
-								if(sym == rmparen){
-									if(ii!=table[i].drt-1){
-										getsym();
-									}
+								if (sym == rmparen)
+								{
+									getsym();
 								}
 							}
-							else{
+							else
 								error(46);
-							}
 						}
 						gen(opr, 0, 14);
 						arraydo(sto, i);
-					} 
-					else{
-						error(39);
 					}
-				}
-				getsym();
-				if(sym==comma){
-				
-					continue;
-				}
-				else{
-				
-					break;
+					else
+						error(39);
 				}
 			}
-			gen(opr,0,15);//获取回车
-			if(sym==rparen){
+			gen(opr, 0, 15); //获取回车
+			if (sym == rparen)
+			{
 				getsym();
 			}
 		}
 	}
-
 	test(fsys, 0, 19);
 }
 
@@ -1625,13 +1731,9 @@ void block(long long fsys) // 程序 -> 分程序
 					constdeclaration();
 				}
 				if (sym == semicolon)
-				{
 					getsym();
-				}
 				else
-				{
-					error(5);
-				}
+					error(501);
 			} while (sym == ident);
 		}
 		if (sym == typesym)
@@ -1639,15 +1741,11 @@ void block(long long fsys) // 程序 -> 分程序
 			getsym();
 			do
 			{
-				//typedeclaration();
+				typedeclaration();
 				if (sym == semicolon)
-				{
 					getsym();
-				}
 				else
-				{
 					error(33);
-				}
 			} while (sym == ident);
 		}
 		if (sym == varsym)
@@ -1662,13 +1760,9 @@ void block(long long fsys) // 程序 -> 分程序
 					vardeclaration();
 				}
 				if (sym == semicolon)
-				{
 					getsym();
-				}
 				else
-				{
-					error(5);
-				}
+					error(502);
 			} while (sym == ident);
 		}
 		while (sym == procsym || sym == funcsym) // function and procedure
@@ -1683,13 +1777,9 @@ void block(long long fsys) // 程序 -> 分程序
 					getsym();
 				}
 				else
-				{
 					error(4);
-				}
 				if (sym == semicolon)
-				{
 					getsym();
-				}
 				else if (sym == lparen)
 				{ // ( 有参数
 					getsym();
@@ -1703,36 +1793,24 @@ void block(long long fsys) // 程序 -> 分程序
 							getsym();
 						}
 						else
-						{
 							error(38);
-						}
 						if (sym == intersym || sym == realsym || sym == Boolsym)
 						{
 							pnow[prodn - 1].sym = sym;
 							getsym();
 						}
 						else
-						{
 							error(39);
-						}
 						if (sym == semicolon || sym == rparen)
-						{
 							getsym();
-						}
 						else
-						{
-							error(5);
-						}
+							error(503);
 					}
 					if (sym == semicolon)
-					{
 						getsym();
-					}
 				}
 				else
-				{
-					error(5);
-				}
+					error(504);
 			}
 			else if (sym == funcsym)
 			{
@@ -1745,9 +1823,7 @@ void block(long long fsys) // 程序 -> 分程序
 					i = position(id);
 				}
 				else
-				{
 					error(4);
-				}
 				if (sym == lparen)
 				{ // 有参数
 					getsym();
@@ -1761,9 +1837,7 @@ void block(long long fsys) // 程序 -> 分程序
 							getsym();
 						}
 						else
-						{
 							error(38);
-						}
 						if (sym == intersym || sym == realsym)
 						{
 							table[i].paral[k] = sym;
@@ -1772,17 +1846,11 @@ void block(long long fsys) // 程序 -> 分程序
 							getsym();
 						}
 						else
-						{
 							error(39);
-						}
 						if (sym == semicolon || sym == rparen)
-						{
 							getsym();
-						}
 						else
-						{
-							error(5);
-						}
+							error(505);
 					}
 				}
 				if (sym == nul)
@@ -1794,18 +1862,14 @@ void block(long long fsys) // 程序 -> 分程序
 						getsym();
 					}
 					else
-					{
 						error(45);
-					}
 				}
 				else
-				{
 					error(44);
-				}
 				if (sym == semicolon)
 					getsym();
 				else
-					error(5);
+					error(506);
 			}
 			lev = lev + 1;
 			tx1 = tx;
@@ -1820,9 +1884,7 @@ void block(long long fsys) // 程序 -> 分程序
 				test(statbegsys | ident | procsym | funcsym, fsys, 6);
 			}
 			else
-			{
-				error(5);
-			}
+				error(507);
 		}
 		test(statbegsys | ident, declbegsys, 7);
 	} while (sym & declbegsys);
@@ -1830,14 +1892,10 @@ void block(long long fsys) // 程序 -> 分程序
 	table[tx0].addr = cx; // start addr of code
 	cx0 = cx;
 	for (j = 0; j < table[tx0].n; j++)
-	{
 		gen(sto, lev - table[tx2].level, table[tx2].addr - j);
-	}
 	gen(Int, 0, dx + table[tx0].n);
 	if (sym == beginsym)
-	{
 		statement(fsys | semicolon | endsym);
-	}
 	else
 	{
 		error(54);
@@ -1996,14 +2054,14 @@ int main()
 	lev = 0;
 	tx = 0;
 	block(declbegsys | statbegsys | period);
-	printf("Now debug:\n");
-	int i;
-	for(i=0;i<=tx;i++)
-	{
-		Tableprint(i);
-	}
-	
-	printf("Debug ends\n");
+	// printf("Now debug:\n");
+	// int i;
+	// for(i=0;i<=tx;i++)
+	// {
+	// 	Tableprint(i);
+	// }
+
+	// printf("Debug ends\n");
 	if (sym != period)
 	{
 		error(9);

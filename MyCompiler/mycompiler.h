@@ -167,3 +167,26 @@ long exitcx = 0; //记录最新的exit语句的中间代码位置
 // the following array space for interpreter
 #define stacksize 50000
 double s[stacksize]; // datastore
+
+void init();
+void switchType(long long sym);
+void Tableprint(int i);
+void error(long n);
+void getch();
+void getsym();
+void gen(enum fct x, long y, double z);
+void test(long long s1, long long s2, long n);
+void enter(enum object k);
+long position(char *id);
+void constdeclaration();
+void vardeclaration();
+void typeexpression();
+void typedeclaration();
+void listcode(long cx0);
+void arraydo(enum fct x, int i);
+void factor(long long fsys);
+void term(long long fsys);
+void expression(long long fsys);
+void condition(long long fsys);
+void statement(long long fsys);
+void block(long long fsys);

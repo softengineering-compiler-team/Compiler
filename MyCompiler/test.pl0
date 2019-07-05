@@ -1,22 +1,46 @@
-const m=7, n=85;
-var x,y,z,q,r : integer;
-procedure p(n:integer);
-function f(n:integer):integer;
-begin
-	
-    x:=2;
-	read(x);
-	read(1,2);
-	read(p);
-	read(f);
-	write(x);
-	write(2);
-	write(2.1);
-	write(2,1);
-	write(p);
-	write(f);
-	
-	
-	
+type arr = array[1..10] of integer;
+var A: arr;
+i : integer;
 
+procedure qsort(a:integer;b:integer);
+var i, cur:integer;
+tmp:integer;
+begin
+    if a < b then
+    begin
+        i:=a;
+        cur:=a;
+        while i < b do
+        begin
+            if A[i]<A[b] then
+            begin
+                tmp:=A[cur];
+                A[cur]:=A[i];
+                A[i]:=tmp;
+                cur:=cur+1;
+            end;
+            i:=i+1
+        end;
+        tmp:=A[cur];
+        A[cur]:=A[b];
+        A[b]:=tmp;
+        call qsort(a, cur-1);
+        call qsort(cur+1,b)
+    end
+end;
+
+begin
+    i := 1;
+    while i <= 10 do
+    begin
+        read(A[i]);
+        i:=i+1
+    end;
+    call qsort(1,10);
+    i := 1;
+    while i<=10 do
+    begin
+        write(A[i]);
+        i:=i+1
+    end
 end.
