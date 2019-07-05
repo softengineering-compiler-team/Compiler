@@ -1535,7 +1535,29 @@ void statement(long long fsys) // 程序控制流程
 						gen(opr, 0, 14);
 						gen(sto, lev - table[i].level, table[i].addr);
 					}
-				//	else if(){} read数组函数位置
+					else if(table[i].type1==arraysym && (table[i].type2==realsym || table[i].type2 == intersym))
+					{//read数组函数位置
+						getsym();
+						for( ii = 0; ii<table[i].drt; ii++){
+							if(sym == lmparen){
+								getsym();
+								condition(fsys|rmparen);
+								if(lastsym!=intersym){
+									error(46);
+								}
+								if(sym == rmparen){
+									if(ii!=table[i].drt-1){
+										getsym();
+									}
+								}
+							}
+							else{
+								error(46);
+							}
+						}
+						gen(opr, 0, 14);
+						arraydo(sto, i);
+					} 
 					else{
 						error(39);
 					}
