@@ -934,6 +934,7 @@ void arraydo(enum fct x, int i)
 			gen(lit, 0, table[i].high[t]);
 			gen(sto, lev - table[i].level, table[i].addr + d);
 		}
+		gen(say, lev-table[i].level, table[i].addr);
 		break;
 	case lod:
 		gen(lit, 0, table[i].drt);
