@@ -175,7 +175,7 @@ int main()
 				}
 				else
 				{
-					printf("\t%5d", s[t]);
+					printf("\t%5ld", (long)s[t]);
 				}
 				t--;
 				break;
