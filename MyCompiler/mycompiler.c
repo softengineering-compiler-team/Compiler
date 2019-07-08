@@ -5,170 +5,170 @@ int mycnt = 0;
 
 void switchType(long long sym)
 {
-	switch (sym):
-		{
-		case nul:
-			printf("nul");
-			break;
-		case ident:
-			printf("ident");
-			break;
-		case number:
-			printf("number");
-			break;
-		case plus:
-			printf("plus");
-			break;
-		case minus:
-			printf("minus");
-			break;
-		case times:
-			printf("times");
-			break;
-		case slash:
-			printf("slash");
-			break;
-		case oddsym:
-			printf("oddsym");
-			break;
-		case eql:
-			printf("eql");
-			break;
-		case neq:
-			printf("neq");
-			break;
-		case lss:
-			printf("lss");
-			break;
-		case leq:
-			printf("leq");
-			break;
-		case gtr:
-			printf("gtr");
-			break;
-		case geq:
-			printf("geq");
-			break;
-		case lparen:
-			printf("lparen");
-			break;
-		case rparen:
-			printf("rparen");
-			break;
-		case comma:
-			printf("comma");
-			break;
-		case semicolon:
-			printf("semicolon");
-			break;
-		case period:
-			printf("period");
-			break;
-		case becomes:
-			printf("becomes");
-			break;
-		case beginsym:
-			printf("beginsym");
-			break;
-		case endsym:
-			printf("endsym");
-			break;
-		case ifsym:
-			printf("ifsym");
-			break;
-		case thensym:
-			printf("thensym");
-			break;
-		case whilesym:
-			printf("whilesym");
-			break;
-		case dosym:
-			printf("dosym");
-			break;
-		case callsym:
-			printf("callsym");
-			break;
-		case constsym:
-			printf("constsym");
-			break;
-		case varsym:
-			printf("varsym");
-			break;
-		case procsym:
-			printf("procsym");
-			break;
-		case typesym:
-			printf("typesym");
-			break;
-		case arraysym:
-			printf("arraysym");
-			break;
-		case ofsym:
-			printf("ofsym");
-			break;
-		case intersym:
-			printf("intersym");
-			break;
-		case realsym:
-			printf("realsym");
-			break;
-		case Boolsym:
-			printf("Boolsym");
-			break;
-		case funcsym:
-			printf("funcsym");
-			break;
-		case elsesym:
-			printf("elsesym");
-			break;
-		case writesym:
-			printf("writesym");
-			break;
-		case readsym:
-			printf("readsym");
-			break;
-		case exitsym:
-			printf("exitsym");
-			break;
-		case or:
-			printf("or");
-			break;
-		case and:
-			printf("and");
-			break;
-		case not:
-			printf("not");
-			break;
-		case div:
-			printf("div");
-			break;
-		case mod:
-			printf("mod");
-			break;
-		case truesym:
-			printf("truesym");
-			break;
-		case falsesym:
-			printf("falsesym");
-			break;
-		case lmparen:
-			printf("lmparen");
-			break;
-		case rmparen:
-			printf("rmparen");
-			break;
-		case typeerror:
-			printf("typeerror");
-			break;
-		case voiderror:
-			printf("voiderror");
-			break;
-		case dotdot:
-			printf("dotdot");
-			break;
-		default:
-			break;
-		}
+	switch (sym)
+	{
+	case nul:
+		printf("nul");
+		break;
+	case ident:
+		printf("ident");
+		break;
+	case number:
+		printf("number");
+		break;
+	case plus:
+		printf("plus");
+		break;
+	case minus:
+		printf("minus");
+		break;
+	case times:
+		printf("times");
+		break;
+	case slash:
+		printf("slash");
+		break;
+	case oddsym:
+		printf("oddsym");
+		break;
+	case eql:
+		printf("eql");
+		break;
+	case neq:
+		printf("neq");
+		break;
+	case lss:
+		printf("lss");
+		break;
+	case leq:
+		printf("leq");
+		break;
+	case gtr:
+		printf("gtr");
+		break;
+	case geq:
+		printf("geq");
+		break;
+	case lparen:
+		printf("lparen");
+		break;
+	case rparen:
+		printf("rparen");
+		break;
+	case comma:
+		printf("comma");
+		break;
+	case semicolon:
+		printf("semicolon");
+		break;
+	case period:
+		printf("period");
+		break;
+	case becomes:
+		printf("becomes");
+		break;
+	case beginsym:
+		printf("beginsym");
+		break;
+	case endsym:
+		printf("endsym");
+		break;
+	case ifsym:
+		printf("ifsym");
+		break;
+	case thensym:
+		printf("thensym");
+		break;
+	case whilesym:
+		printf("whilesym");
+		break;
+	case dosym:
+		printf("dosym");
+		break;
+	case callsym:
+		printf("callsym");
+		break;
+	case constsym:
+		printf("constsym");
+		break;
+	case varsym:
+		printf("varsym");
+		break;
+	case procsym:
+		printf("procsym");
+		break;
+	case typesym:
+		printf("typesym");
+		break;
+	case arraysym:
+		printf("arraysym");
+		break;
+	case ofsym:
+		printf("ofsym");
+		break;
+	case intersym:
+		printf("intersym");
+		break;
+	case realsym:
+		printf("realsym");
+		break;
+	case Boolsym:
+		printf("Boolsym");
+		break;
+	case funcsym:
+		printf("funcsym");
+		break;
+	case elsesym:
+		printf("elsesym");
+		break;
+	case writesym:
+		printf("writesym");
+		break;
+	case readsym:
+		printf("readsym");
+		break;
+	case exitsym:
+		printf("exitsym");
+		break;
+	case or:
+		printf("or");
+		break;
+	case and:
+		printf("and");
+		break;
+	case not:
+		printf("not");
+		break;
+	case div:
+		printf("div");
+		break;
+	case mod:
+		printf("mod");
+		break;
+	case truesym:
+		printf("truesym");
+		break;
+	case falsesym:
+		printf("falsesym");
+		break;
+	case lmparen:
+		printf("lmparen");
+		break;
+	case rmparen:
+		printf("rmparen");
+		break;
+	case typeerror:
+		printf("typeerror");
+		break;
+	case voiderror:
+		printf("voiderror");
+		break;
+	case dotdot:
+		printf("dotdot");
+		break;
+	default:
+		break;
+	}
 	return;
 }
 
@@ -177,24 +177,24 @@ void Tableprint(int i)
 	printf("\nNow printing table[%d]:\n", i);
 	printf("\t.name =\t\t%s\n", table[i].name);
 	printf("\t.kind =\t\t");
-	switch (table[i].kind):
-		{
-		case constant:
-			puts("constant");
-			break;
-		case variable:
-			puts("variable");
-			break;
-		case proc:
-			puts("procedure");
-			break;
-		case type:
-			puts("type");
-			break;
-		case func:
-			puts("function");
-			break;
-		}
+	switch (table[i].kind)
+	{
+	case constant:
+		puts("constant");
+		break;
+	case variable:
+		puts("variable");
+		break;
+	case proc:
+		puts("procedure");
+		break;
+	case type:
+		puts("type");
+		break;
+	case func:
+		puts("function");
+		break;
+	}
 	printf("\t.val =\t\t%.6lf\n", table[i].val);
 	printf("\t.level =\t%ld\n", table[i].level);
 	printf("\t.addr =\t\t%ld\n", table[i].addr);
@@ -615,36 +615,36 @@ void enter(enum object k) // enter object into table
 	tx = tx + 1;
 	strcpy(table[tx].name, id);
 	table[tx].kind = k;
-	switch (k):
+	switch (k)
+	{
+	case constant:
+		if (num > amax)
 		{
-		case constant:
-			if (num > amax)
-			{
-				error(31);
-				num = 0;
-			}
-			table[tx].val = num;
-			table[tx].type1 = sym; //记录Const的类型，int or real
-			break;
-		case variable:
-			table[tx].level = lev;
-			table[tx].addr = dx;
-			dx = dx + 1;
-			break;
-		case proc:
-			table[tx].level = lev;
-			dx = dx + 1;
-			break;
-		case type:
-			table[tx].level = lev;
-			table[tx].type1 = sym;
-			break;
-		case func:
-			table[tx].level = lev;
-			table[tx].funcaddr = dx;
-			dx = dx + 1;
-			break;
+			error(31);
+			num = 0;
 		}
+		table[tx].val = num;
+		table[tx].type1 = sym; //记录Const的类型，int or real
+		break;
+	case variable:
+		table[tx].level = lev;
+		table[tx].addr = dx;
+		dx = dx + 1;
+		break;
+	case proc:
+		table[tx].level = lev;
+		dx = dx + 1;
+		break;
+	case type:
+		table[tx].level = lev;
+		table[tx].type1 = sym;
+		break;
+	case func:
+		table[tx].level = lev;
+		table[tx].funcaddr = dx;
+		dx = dx + 1;
+		break;
+	}
 }
 
 long position(char *id) // find identifier id in table
@@ -901,37 +901,37 @@ void listcode(long cx0) // list code generated for this block
 void arraydo(enum fct x, int i)
 {
 	long d, t;
-	switch (x):
-		{
-		case sto:
-			gen(lit, 0, table[i].drt);
-			gen(sto, lev - table[i].level, table[i].addr + 1);
-			for (t = 1, d = 1; t <= table[i].drt; t++)
-			{ //产生指令存入array上下界和维数
-				d++;
-				gen(lit, 0, table[i].low[t]);
-				gen(sto, lev - table[i].level, table[i].addr + d);
-				d++;
-				gen(lit, 0, table[i].high[t]);
-				gen(sto, lev - table[i].level, table[i].addr + d);
-			}
-			gen(say, lev - table[i].level, table[i].addr); // 存入数组
-			break;
-		case lod:
-			gen(lit, 0, table[i].drt);
-			gen(sto, lev - table[i].level, table[i].addr + 1);
-			for (t = 1, d = 1; t <= table[i].drt; t++)
-			{ //产生指令存入array上下界和维数
-				d++;
-				gen(lit, 0, table[i].low[t]);
-				gen(sto, lev - table[i].level, table[i].addr + d);
-				d++;
-				gen(lit, 0, table[i].high[t]);
-				gen(sto, lev - table[i].level, table[i].addr + d);
-			}
-			gen(lay, lev - table[i].level, table[i].addr); // 取出数组
-			break;
+	switch (x)
+	{
+	case sto:
+		gen(lit, 0, table[i].drt);
+		gen(sto, lev - table[i].level, table[i].addr + 1);
+		for (t = 1, d = 1; t <= table[i].drt; t++)
+		{ //产生指令存入array上下界和维数
+			d++;
+			gen(lit, 0, table[i].low[t]);
+			gen(sto, lev - table[i].level, table[i].addr + d);
+			d++;
+			gen(lit, 0, table[i].high[t]);
+			gen(sto, lev - table[i].level, table[i].addr + d);
 		}
+		gen(say, lev - table[i].level, table[i].addr); // 存入数组
+		break;
+	case lod:
+		gen(lit, 0, table[i].drt);
+		gen(sto, lev - table[i].level, table[i].addr + 1);
+		for (t = 1, d = 1; t <= table[i].drt; t++)
+		{ //产生指令存入array上下界和维数
+			d++;
+			gen(lit, 0, table[i].low[t]);
+			gen(sto, lev - table[i].level, table[i].addr + d);
+			d++;
+			gen(lit, 0, table[i].high[t]);
+			gen(sto, lev - table[i].level, table[i].addr + d);
+		}
+		gen(lay, lev - table[i].level, table[i].addr); // 取出数组
+		break;
+	}
 }
 
 void factor(long long fsys)
@@ -948,66 +948,76 @@ void factor(long long fsys)
 				error(11);
 			else
 			{
-				switch (table[i].kind):
+				switch (table[i].kind)
+				{
+				case constant: //对于const 生成中间代码
+				{
+					gen(lit, 0, table[i].val);
+					lastsym = table[i].type1;
+					getsym();
+					break;
+				}
+				case variable: //对于 var 生成中间代码
+				{
+					// 当 var 类型是 int real 或 Boolean时
+					long long type = table[i].type1;
+					if (type == intersym || type == realsym || type == Boolsym)
 					{
-					case constant: //对于const 生成中间代码
-					{
-						gen(lit, 0, table[i].val);
-						lastsym = table[i].type1;
+						gen(lod, lev - table[i].level, table[i].addr); // lod lev,addr 中间代码，相当于将 var 的值装入栈顶
+						lastsym = type;
 						getsym();
-						break;
 					}
-					case variable: //对于 var 生成中间代码
-					{
-						// 当 var 类型是 int real 或 Boolean时
-						long long type = table[i].type1;
-						if (type == intersym || type == realsym || type == Boolsym)
-						{
-							gen(lod, lev - table[i].level, table[i].addr); // lod lev,addr 中间代码，相当于将 var 的值装入栈顶
-							lastsym = type;
+					else
+					{ // var 类型是 array时
+						if (type == arraysym)
+						{ //数组类型
+							away = 0;
 							getsym();
-						}
-						else
-						{ // var 类型是 array时
-							if (type == arraysym)
-							{ //数组类型
-								away = 0;
-								getsym();
-								for (j = 0; j < table[i].drt; j++)
+							for (j = 0; j < table[i].drt; j++)
+							{
+								if (sym == lmparen)
 								{
-									if (sym == lmparen)
+									getsym();
+									condition(fsys | rmparen);
+									if (lastsym != intersym)
 									{
-										getsym();
-										condition(fsys | rmparen);
-										if (lastsym != intersym)
-										{
-											lastsym = typeerror;
-											error(49);
-										}
-										if (sym == rmparen)
-											getsym();
-										else
-											error(40);
+										lastsym = typeerror;
+										error(49);
 									}
+									if (sym == rmparen)
+										getsym();
 									else
-										error(46);
+										error(40);
 								}
-								if (lastsym != typeerror)
-									lastsym = table[i].type2;
-								arraydo(lod, i);
+								else
+									error(46);
 							}
+							if (lastsym != typeerror)
+								lastsym = table[i].type2;
+							arraydo(lod, i);
 						}
-						break;
 					}
-					case proc:
-						error(21);
-						break;
+					break;
+				}
+				case proc:
+					error(21);
+					break;
 
-					case func:
+				case func:
+					getsym();
+					k = 0;
+					if (sym == lparen) // 有参数
+					{
 						getsym();
-						k = 0;
-						if (sym == lparen) // 有参数
+						condition(fsys | comma | rparen);
+						if (lastsym != table[i].paral[k])
 						{
+							error(49);
+							lastsym = typeerror;
+						}
+						while (sym == comma)
+						{
+							k++;
 							getsym();
 							condition(fsys | comma | rparen);
 							if (lastsym != table[i].paral[k])
@@ -1015,44 +1025,34 @@ void factor(long long fsys)
 								error(49);
 								lastsym = typeerror;
 							}
-							while (sym == comma)
-							{
-								k++;
-								getsym();
-								condition(fsys | comma | rparen);
-								if (lastsym != table[i].paral[k])
-								{
-									error(49);
-									lastsym = typeerror;
-								}
-							}
-							if (sym == rparen) // )
-							{
-								gen(cal, lev - table[i].level, table[i].addr);
-								getsym();
-							}
-							for (k = 0; k < table[i].n; k++)
-							{
-								gen(opr, 0, 7); //把实参弹出
-							}
-							gen(lod, lev - table[i].level, table[i].funcaddr);
-							if (lastsym != typeerror)
-								lastsym = table[i].type1;
 						}
-						else if (sym == becomes)
-						{ // 返回语句
-							// 返回值放到栈顶
-							gen(lod, lev - table[i].level, table[i].funcaddr);
-							lastsym = table[i].type1;
-						}
-						else
-						{ // 无参函数
+						if (sym == rparen) // )
+						{
 							gen(cal, lev - table[i].level, table[i].addr);
-							gen(lod, lev - table[i].level, table[i].funcaddr);
-							lastsym = table[i].type1;
+							getsym();
 						}
-						break;
+						for (k = 0; k < table[i].n; k++)
+						{
+							gen(opr, 0, 7); //把实参弹出
+						}
+						gen(lod, lev - table[i].level, table[i].funcaddr);
+						if (lastsym != typeerror)
+							lastsym = table[i].type1;
 					}
+					else if (sym == becomes)
+					{ // 返回语句
+						// 返回值放到栈顶
+						gen(lod, lev - table[i].level, table[i].funcaddr);
+						lastsym = table[i].type1;
+					}
+					else
+					{ // 无参函数
+						gen(cal, lev - table[i].level, table[i].addr);
+						gen(lod, lev - table[i].level, table[i].funcaddr);
+						lastsym = table[i].type1;
+					}
+					break;
+				}
 			}
 		}
 		else if (sym == intersym || sym == realsym) // 对于 int or real类型的 单词 进行装入
@@ -1407,25 +1407,25 @@ void statement(long long fsys) // 程序控制流程
 		if (i != 0)
 		{
 			//gen(sto, lev - table[i].level, table[i].addr);
-			switch (table[i].kind):
-				{
-				case variable:
-					if (table[i].type1 == intersym || table[i].type1 == realsym)
-						gen(sto, lev - table[i].level, table[i].addr);
-					else if (table[i].type1 = arraysym)
-						arraydo(sto, i);
-					break;
-				case func:
-					gen(sto, lev - table[i].level, table[i].funcaddr);
-					break;
-				case type:
-				{
-					error(56);
-					break;
-				}
-				default:
-					break;
-				}
+			switch (table[i].kind)
+			{
+			case variable:
+				if (table[i].type1 == intersym || table[i].type1 == realsym)
+					gen(sto, lev - table[i].level, table[i].addr);
+				else if (table[i].type1 = arraysym)
+					arraydo(sto, i);
+				break;
+			case func:
+				gen(sto, lev - table[i].level, table[i].funcaddr);
+				break;
+			case type:
+			{
+				error(56);
+				break;
+			}
+			default:
+				break;
+			}
 		}
 	}
 	else if (sym == callsym)
