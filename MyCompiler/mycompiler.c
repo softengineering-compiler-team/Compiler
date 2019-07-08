@@ -462,20 +462,20 @@ void getsym() //get one word and init its word type(sym)
 		else
 			sym = nul;
 	}
-	else if (ch == '/')
+	else if (ch == '/') // 开头为"/"的注释情况
 	{
-		getch();
-		if (ch == '*')
+		getch();	   //取词
+		if (ch == '*') // "/*"开头
 		{
 			while (1)
 			{
 				getch();
-				if (ch != '*')
+				if (ch != '*') // 不为"*"的时候循环取词
 					continue;
-				else
+				else // 为"*"的时候判断"/"符号
 				{
 					getch();
-					if (ch == '/')
+					if (ch == '/') // /**/注释完整则break
 						break;
 					else
 						continue;
@@ -484,9 +484,9 @@ void getsym() //get one word and init its word type(sym)
 			getch();
 			getsym();
 		}
-		else if (ch == '/')
+		else if (ch == '/') // "//"开头
 		{
-			cc = ll;
+			cc = ll; //将本行长度赋给当前值，相当于注释掉当前行
 			getch();
 			getsym();
 		}
@@ -495,10 +495,10 @@ void getsym() //get one word and init its word type(sym)
 			sym = ssym[(unsigned char)'/'];
 		}
 	}
-	else if (ch == '*')
+	else if (ch == '*') // "*"开头
 	{
-		getch();
-		if (ch == '/')
+		getch();	   //取词
+		if (ch == '/') //与上方类似
 		{
 			getch();
 			if (ch == '*')
@@ -1603,7 +1603,7 @@ void statement(long long fsys) // 程序控制流程
 		else
 		{
 			//while内获取括号内变量，有逗号则继续获取
-			do
+			while (1)
 			{
 				getsym();
 				if (sym == ident)
@@ -1614,55 +1614,60 @@ void statement(long long fsys) // 程序控制流程
 					error(36);
 				else
 				{
-					if (table[i].kind == constant || table[i].kind == proc || table[i].kind == func || table[i].kind == Boolsym)
+					if (table[i].kind == proc || table[i].kind == func || table[i].kind == constant || table[i].type1 == Boolsym)
 					{
 						error(12);
 						i = 0;
-						getsym();
-						continue;
 					}
-					else
+					else if (table[i].type1 == realsym || table[i].type1 == intersym)
 					{
-						if (table[i].type1 == intersym || table[i].type1 == realsym)
+						gen(opr, 0, 14);
+						gen(sto, lev - table[i].level, table[i].addr);
+					}
+					else if (table[i].type1 == arraysym && (table[i].type2 & (intersym | realsym)))
+					{
+						getsym();
+						for (ii = 0; ii < table[i].drt; ii++) //drt数组维度
 						{
-							getsym();
-							gen(opr, 0, 14);
-							gen(sto, lev - table[i].level, table[i].addr);
-						}
-						else
-						{
-							if (table[i].type1 == arraysym && (table[i].type2 & (intersym | realsym)))
+							if (sym == lmparen)
 							{
 								getsym();
-								for (ii = 0; ii < table[i].drt; ii++)
+								condition(fsys | rmparen);
+								if (lastsym != intersym)
 								{
-									if (sym == lmparen)
-									{
-										getsym();
-										condition(fsys | rmparen);
-										if (lastsym != intersym)
-										{
-											lastsym = typeerror;
-											error(46);
-										}
-										if (sym == rmparen)
-											getsym();
-									}
-									else
-										error(46);
+									lastsym = typeerror;
+									error(46);
 								}
-								gen(opr, 0, 14);
-								arraydo(sto, i);
+								if (sym == rmparen)
+								{
+									if (ii != table[i].drt - 1)
+										getsym();
+								}
 							}
 							else
-								error(39);
+								error(46);
 						}
-					}
+						gen(opr, 0, 14);
+						arraydo(sto, i);
+					} //read数组函数位置
+					else
+						error(39);
 				}
-			} while (sym == comma);
-			gen(opr, 0, 15);
-			if (sym == rparen)
 				getsym();
+				if (sym == comma)
+				{
+					continue;
+				}
+				else
+				{
+					break;
+				}
+			}
+			gen(opr, 0, 15); //获取回车
+			if (sym == rparen)
+			{
+				getsym();
+			}
 		}
 	}
 	test(fsys, 0, 19);
