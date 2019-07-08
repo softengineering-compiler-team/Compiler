@@ -1616,81 +1616,79 @@ void statement(long long fsys) // 程序控制流程
 		else
 			error(35);
 	}
-	else if (sym == readsym)
-	{
+	else if (sym == readsym){
 		getsym();
-		if (sym != lparen)
+		if (sym != lparen){
 			error(35);
-		else
-		{
+		}
+		else{
 			//while内获取括号内变量，有逗号则继续获取
-			do
-			{
+			while(1){
 				getsym();
-				if(sym == ident)
+				if(sym==ident){
 					i = position(id);
-				else i=0;
-				if(i==0)
+					//printf("-----------%ld\n",i);
+				}
+				else{
+					i=0;
+				}
+				if(i==0){
 					error(36);
-				else
-				{
-					if(table[i].kind == constant || table[i].kind == proc || table[i].kind == func || table[i].kind == Boolsym)
-					{
+				}
+				else{
+					if(table[i].kind==proc||table[i].kind==func||table[i].kind==constant||table[i].type1==Boolsym){
 						error(12);
 						i=0;
-						getsym();
-						continue;
 					}
-					else
-					{
-						if(table[i].type1 == intersym || table[i].type1 == realsym)
-						{
-							getsym();
-							gen(opr, 0, 14);
-							gen(sto, lev-table[i].level, table[i].addr);
-						}
-						else
-						{
-							if(table[i].type1 == arraysym && (table[i].type2 & (intersym | realsym)))
+					else if(table[i].type1==realsym||table[i].type1==intersym){
+						gen(opr, 0, 14);
+						gen(sto, lev - table[i].level, table[i].addr);
+					}
+					else if(table[i].type1 == arraysym && (table[i].type2 & (intersym | realsym))){
+						getsym();
+							for (ii = 0; ii < table[i].drt; ii++) //drt数组维度
 							{
-								getsym();
-								for(ii = 0;ii < table[i].drt;ii++)
+								if (sym == lmparen)
 								{
-									if(sym == lmparen)
+									getsym();
+									condition(fsys | rmparen);
+									if (lastsym != intersym)
 									{
-										getsym();
-										condition(fsys|rmparen);
-										if(lastsym != intersym)
-										{
-											lastsym = typeerror;
-											error(46);
-										}
-										if(sym == rmparen)
-										{
-											getsym();
-										}
-									}
-									else
-									{
+										lastsym = typeerror;
 										error(46);
 									}
+									if (sym == rmparen)
+									{
+										if(ii!=table[i].drt-1)
+											getsym();
+									}
 								}
-								gen(opr, 0, 14);
-								arraydo(sto,i);
+								else
+								{
+									error(46);
+								}
 							}
-							else
-							{
-								error(39);
-							}
-							
-						}
-						
+							gen(opr, 0, 14);
+							arraydo(sto, i);
+					} //read数组函数位置
+					else{
+						error(39);
 					}
 				}
-			} while (sym == comma);
-			gen(opr, 0, 15);
-			if(sym == rparen)
 				getsym();
+				if(sym==comma){
+					//printf("----------in\n");
+					continue;
+				}
+				else{
+					//printf("----------out\n");
+					break;
+				}
+			}
+			gen(opr,0,15);//获取回车
+			if(sym==rparen){
+				getsym();
+			}
 		}
 	}
 	test(fsys, 0, 19);
