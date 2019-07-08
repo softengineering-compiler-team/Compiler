@@ -2070,7 +2070,24 @@ int main()
 	}
 	if (err == 0)
 	{
-		interpret();
+		//interpret();
+		if ((outfile = fopen("out.txt", "wb")) == NULL)
+		{
+			printf("File <out.txt> can't be opened.\n");
+			exit(1);
+		}
+		fwrite(&code, sizeof(instruction), cxmax, outfile);
+		fclose(outfile);
+		if ((outfile = fopen("code.txt", "w")) == NULL)
+		{
+			printf("File <out.txt> can't be opened.\n");
+			exit(1);
+		}
+		for (int i = 0; i <= cx; i++)
+		{
+			fprintf(outfile, "%10d%5s%3d%10.5f\n", i, mnemonic[code[i].f], code[i].l, code[i].a);
+		}
+		fclose(outfile);
 	}
 	else
 	{
