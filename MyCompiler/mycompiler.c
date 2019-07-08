@@ -474,20 +474,20 @@ void getsym()
 		else
 			sym = nul;
 	}
-	else if (ch == '/')
+	else if (ch == '/')// 开头为"/"的注释情况
 	{
-		getch();
-		if (ch == '*')
+		getch();//取词
+		if (ch == '*')// "/*"开头
 		{
 			while (1)
 			{
 				getch();
-				if (ch != '*')
+				if (ch != '*')// 不为"*"的时候循环取词
 					continue;
-				else
+				else// 为"*"的时候判断"/"符号
 				{
 					getch();
-					if (ch == '/')
+					if (ch == '/')// /**/注释完整则break
 						break;
 					else
 						continue;
@@ -496,9 +496,9 @@ void getsym()
 			getch();
 			getsym();
 		}
-		else if (ch == '/')
+		else if (ch == '/')// "//"开头
 		{
-			cc = ll;
+			cc = ll;//将本行长度赋给当前值，相当于注释掉当前行
 			getch();
 			getsym();
 		}
@@ -507,10 +507,10 @@ void getsym()
 			sym = ssym[(unsigned char)'/'];
 		}
 	}
-	else if (ch == '*')
+	else if (ch == '*')// "*"开头
 	{
-		getch();
-		if (ch == '/')
+		getch();//取词
+		if (ch == '/')//与上方类似
 		{
 			getch();
 			if (ch == '*')
